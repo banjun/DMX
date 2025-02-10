@@ -15,9 +15,22 @@
 		633332BF2D54517700A038F1 /* DMXController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DMXController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		63F4802D2D56356F00EE1F49 /* Exceptions for "DMXController" folder in "DMXController" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 633332BE2D54517700A038F1 /* DMXController */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		633332C12D54517700A038F1 /* DMXController */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				63F4802D2D56356F00EE1F49 /* Exceptions for "DMXController" folder in "DMXController" target */,
+			);
 			path = DMXController;
 			sourceTree = "<group>";
 		};
@@ -264,6 +277,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DMXController/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "for multipeer - with NSBonjourServices";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -303,6 +318,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DMXController/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "for multipeer - with NSBonjourServices";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

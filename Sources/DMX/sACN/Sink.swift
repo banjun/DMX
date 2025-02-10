@@ -1,5 +1,6 @@
 import Foundation
 import Network
+import Combine
 
 public actor Sink {
     public private(set) var payloads: [UInt16: Payload?] = [:]
@@ -76,6 +77,29 @@ public actor Sink {
         connectionGroup.start(queue: queue)
     }
 
+    private var multipeerReceiverCancellable: AnyCancellable?
+    private var multipeerReceiver: (any Publisher<Data, Never>)? {
+        didSet {
+            multipeerReceiverCancellable = multipeerReceiver?.sink { [weak self] data in
+                guard let self else { return }
+                Task {
+                    guard let packet = DataPacket(parsing: data) else {
+                        NSLog("%@", "unknown DataPacket(parsing: buffer) error for buffer: \(data.map {String(format: "%02X", $0)}.joined(separator: " "))")
+                        return
+                    }
+                    await self.checkAndHold(packet: packet)
+                }
+            }
+        }
+    }
+    public var isSubscribedMultipeer: Bool {multipeerReceiver != nil}
+    public func subscribeMultipeer(_ receiveData: any Publisher<Data, Never>) {
+        self.multipeerReceiver = receiveData
+    }
+    public func unsubscribeMultipper() {
+        self.multipeerReceiver = nil
+    }
+
     private func checkAndHold(message: NWConnectionGroup.Message, data: Data, isCompleted: Bool) {
         if let remoteEndpoint = message.remoteEndpoint {
             guard !self.ignoredRemoteEndpoints.contains(remoteEndpoint) else {
@@ -122,6 +146,10 @@ public actor Sink {
             }
         }
 
+        checkAndHold(packet: packet)
+    }
+
+    func checkAndHold(packet: DataPacket) {
         let seq = packet.framingLayer.sequenceNumber
         if let lastPayload = payloads[packet.framingLayer.universe.value], let lastSeq = lastPayload?.seq {
             guard ((Int(seq) - Int(lastSeq)) & 0xFF) < ((Int(lastSeq) - Int(seq)) & 0xFF) else {

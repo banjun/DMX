@@ -13,11 +13,13 @@ import DMX
 #else
     let source = Source(transport: .directedBroadcast())
 #endif
+    private(set) var sourceTransportDescription: String = ""
 
     // NOTE: when use with TouchDesigner DMX In (sACN) on the same machine, bind fails with 48 (address already in use).
     // workaround: use different port for Sink.
 //     let sink = Sink(port: 5569)
     let sink = Sink()
+    private(set) var sinkTransportDescription: String = ""
 
     var dmxs: [[UInt8]] = [
         .init(repeating: 0, count: 512),
@@ -26,29 +28,47 @@ import DMX
     var sinkOrSources: [SinkOrSource] = [.source, .sink]
     enum SinkOrSource: String, Identifiable {
         var id: String {rawValue}
-        case sink, source
+        case sink, source, sourceMultipeer
     }
+
+    // optional: additional transport layer
+    @ObservationIgnored private(set) lazy var multipeer = Multipeer()
+    @ObservationIgnored private(set) lazy var multipeerSource = Source(transport: .multipeer(multipeer))
+    private(set) var multipeerSourceTransportDescription: String = ""
 
     init() {
         run()
     }
 
+
     func run() {
         ignoreLocalEndpoints()
 
-        Task.detached {
+        Task {
+            await sink.subscribeMultipeer(multipeer.receivedData)
+            multipeer.start()
+
+            sourceTransportDescription = await source.transport.description
+            multipeerSourceTransportDescription = await multipeerSource.transport.description
+            sinkTransportDescription = await sink.port.debugDescription + (sink.isSubscribedMultipeer ? ", multipeer" : "")
+        }
+
+        Task.detached { [self] in
             for _ in 0..<100_000 {
                 for (universe0Origin, sinkOrSource) in await self.sinkOrSources.enumerated() {
                     let universe = UInt16(universe0Origin + 1)
                     switch sinkOrSource {
                     case .sink:
-                        await self.sink.start(universe: universe)
+                        await sink.start(universe: universe)
                         if let payload = await self.sink.payloads[universe], let dmx = payload?.dmx.value {
                             Task { @MainActor [weak self] in self?.dmxs[universe0Origin] = dmx }
                         }
                     case .source:
-                        await self.sink.stop(universe: universe)
-                        await self.source.send(universe: universe, dmx: self.dmxs[universe0Origin])
+                        await sink.stop(universe: universe)
+                        await source.send(universe: universe, dmx: self.dmxs[universe0Origin])
+                    case .sourceMultipeer:
+                        await sink.stop(universe: universe)
+                        await self.multipeerSource.send(universe: universe, dmx: self.dmxs[universe0Origin])
                     }
                 }
                 try! await Task.sleep(for: .milliseconds(1000 / 30))

@@ -10,10 +10,11 @@ struct ContentView: View {
                     VStack {
                         HStack {
                             @Bindable var model = model
-                            Text("Universe \(universe0Origin + 1)")
+                            Text("Universe \(universe0Origin + 1)").fixedSize()
                             Picker("", selection: $model.sinkOrSources[universe0Origin]) {
-                                Text("Sink").tag(Model.SinkOrSource.sink)
-                                Text("Source").tag(Model.SinkOrSource.source)
+                                Text("Sink (\(model.sinkTransportDescription))").tag(Model.SinkOrSource.sink)
+                                Text("Source (\(model.sourceTransportDescription))").tag(Model.SinkOrSource.source)
+                                Text("Source (\(model.multipeerSourceTransportDescription))").tag(Model.SinkOrSource.sourceMultipeer)
                             }
                             .fixedSize()
                         }

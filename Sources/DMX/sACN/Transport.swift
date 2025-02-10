@@ -11,7 +11,7 @@ import Observation
     }
     nonisolated(unsafe) public var localEndpoint: NWEndpoint?
 
-    public enum Descriptor {
+    public enum Descriptor: Sendable, CustomStringConvertible {
         /// sACN standard
         /// 239.255.universeHi.universeLo
         /// on iOS/visionOS device, multicast requires an Apple authorized entitlement
@@ -23,10 +23,21 @@ import Observation
         case directedBroadcast(String?, NWEndpoint.Port)
         public static func directedBroadcast(interface: String? = nil, port: UInt16 = ACN_SDT_MULTICAST_PORT) -> Descriptor {.directedBroadcast(interface, .init(rawValue: port)!)}
         /// universe -> host,port
-        case custom((UInt16BE) -> NWEndpoint)
+        case custom(@Sendable (UInt16BE) -> NWEndpoint)
         /// use Multipeer Connectivity in stead of the main interface
         /// TODO: under construction
-        case multipeer(MCSession)
+        case multipeer(Multipeer)
+
+        public var description: String {
+            switch self {
+            case .sACNMulticast: "sACN 239.255.universeHi.universeLo"
+            case .unicast(.hostPort(host: let host, port: let port)): "\(host):\(port)"
+            case .unicast: "Unicast"
+            case .directedBroadcast(let interface, let port): "DirectedBroadcast:\(port)\(interface.map {"%\($0)"} ?? "")"
+            case .custom: "Custom"
+            case .multipeer(let multipeer): "Multipeer _\(multipeer.serviceType)"
+            }
+        }
     }
 
     public init(_ descriptor: Descriptor, universe: UInt16BE) {
@@ -48,7 +59,7 @@ import Observation
             guard let dba else { fatalError("cannot find directed broadcast address. specified interface name = \(String(describing: name))") }
             underlyingTransport = .connection(.init(host: .init(dba), port: port, using: .udp))
         case .custom(let block): underlyingTransport = .connection(.init(to: block(universe), using: .udp))
-        case .multipeer(let session): underlyingTransport = .session(session)
+        case .multipeer(let multipeer): underlyingTransport = .session(multipeer.session)
         }
     }
 
@@ -69,6 +80,7 @@ import Observation
                 }
             })
         case .session(let session):
+            guard !session.connectedPeers.isEmpty else { return }
             do {
                 try session.send(data, toPeers: session.connectedPeers, with: .unreliable)
             } catch {
