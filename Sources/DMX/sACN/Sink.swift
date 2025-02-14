@@ -4,6 +4,10 @@ import Combine
 
 public actor Sink {
     public private(set) var payloads: [UInt16: Payload?] = [:]
+
+    let scheduler: SinkScheduler
+    public var payloadsSequence: some AsyncSequence<[UInt16BE: Payload], Never> & Sendable {scheduler.payloadsSequence}
+
     private var connectionGroup: NWConnectionGroup? {
         didSet {oldValue?.cancel()}
     }
@@ -38,9 +42,10 @@ public actor Sink {
         }
     }
 
-    public init(port: UInt16 = ACN_SDT_MULTICAST_PORT, ignoredRemoteEndpoints: @escaping () -> [NWEndpoint] = {[]}) {
+    public init(port: UInt16 = ACN_SDT_MULTICAST_PORT, ignoredRemoteEndpoints: @escaping () -> [NWEndpoint] = {[]}, interval: ContinuousClock.Instant.Duration = .milliseconds(25), resolver: any Resolver = Resolvers.newest) {
         self.port = .init(rawValue: port)!
         self.ignoredRemoteEndpoints = ignoredRemoteEndpoints()
+        self.scheduler = .init(interval: interval, resolver: resolver)
     }
 
     private var buffers: [UInt16BE: Data?] = [:]
@@ -160,6 +165,7 @@ public actor Sink {
 
         let payload = Payload(packet: packet)
         payloads[packet.framingLayer.universe.value] = payload
+        scheduler.receive(payload: payload)
     }
 
     public func stop(universe: UInt16) {

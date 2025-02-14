@@ -14,6 +14,7 @@ public actor Source {
         var seq: UInt8 = 0
         var transport: Transport
     }
+    let scheduler: SourceScheduler = .init()
     public let observable: Observable = .init()
     @Observable public final class Observable: Sendable {
         nonisolated(unsafe) fileprivate var transports: [Transport] = []
@@ -25,10 +26,23 @@ public actor Source {
         self.name = .init(value: name)
         self.transport = transport
         Task {await observeTransportLocalEndpoint()}
+        Task {
+            for await values in scheduler.aggregatedValues {
+                values.forEach { universe, dmx in
+                    Task {await send(universe: universe, dmx: dmx)}
+                }
+            }
+        }
     }
 
-    public func send(universe: UInt16, dmx: [UInt8]) {
-        let universe = UInt16BE(integerLiteral: universe)
+    public func set(universe: UInt16, dmx: [UInt8]) {
+        Task {await scheduler.set(universe: UInt16BE(integerLiteral: universe), dmx: .init(value: dmx))}
+    }
+    public func clear(universe: UInt16) {
+        Task {await scheduler.set(universe: UInt16BE(integerLiteral: universe), dmx: nil)}
+    }
+    private func send(universe: UInt16BE, dmx: DMX) {
+        let universe = universe
         let seq: UInt8
         let transport: Transport
 
@@ -49,7 +63,7 @@ public actor Source {
         let packet = DataPacket(
             rootLayer: .init(cid: cid),
             framingLayer: .init(sourceName: name, sequenceNumber: seq, universe: universe),
-            dmpLayer: .init(propertyValues: .init(dmx: .init(value: dmx))))
+            dmpLayer: .init(propertyValues: .init(dmx: dmx)))
         let data = Data(serializing: packet)
         transport.send(data: data, debugInfo: (universe, seq))
     }

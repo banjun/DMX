@@ -24,8 +24,34 @@ import DMX
     var dmxs: [[UInt8]] = [
         .init(repeating: 0, count: 512),
         .init(repeating: 0, count: 512),
-    ]
-    var sinkOrSources: [SinkOrSource] = [.source, .sink]
+    ] {
+        didSet {
+            for i in 0..<dmxs.count {
+                guard sinkOrSources[i] == .source else { continue }
+                if dmxs[i] != oldValue[i] {
+                    setCurrentToSource(index: i)
+                }
+            }
+        }
+    }
+    var sinkOrSources: [SinkOrSource] = [.source, .sink] {
+        didSet {
+            for i in 0..<sinkOrSources.count {
+                if sinkOrSources[i] != oldValue[i] {
+                    // subscribe/unsubscribe on change source/sink
+                    let universe = UInt16(i + 1)
+                    switch sinkOrSources[i] {
+                    case .source, .sourceMultipeer:
+                        setCurrentToSource(index: i)
+                        Task {await sink.stop(universe: universe)}
+                    case .sink:
+                        Task {await sink.start(universe: universe)}
+                        Task {await source.clear(universe: universe)}
+                    }
+                }
+            }
+        }
+    }
     enum SinkOrSource: String, Identifiable {
         var id: String {rawValue}
         case sink, source, sourceMultipeer
@@ -40,6 +66,9 @@ import DMX
         run()
     }
 
+    private func setCurrentToSource(index: Int) {
+        Task {await source.set(universe: .init(integerLiteral: UInt16(index + 1)), dmx: dmxs[index])}
+    }
 
     func run() {
         ignoreLocalEndpoints()
@@ -53,27 +82,23 @@ import DMX
             sinkTransportDescription = await sink.port.debugDescription + (sink.isSubscribedMultipeer ? ", multipeer" : "")
         }
 
-        Task.detached { [self] in
-            for _ in 0..<100_000 {
-                for (universe0Origin, sinkOrSource) in await self.sinkOrSources.enumerated() {
-                    let universe = UInt16(universe0Origin + 1)
-                    switch sinkOrSource {
-                    case .sink:
-                        await sink.start(universe: universe)
-                        if let payload = await self.sink.payloads[universe], let dmx = payload?.dmx.value {
-                            Task { @MainActor [weak self] in self?.dmxs[universe0Origin] = dmx }
-                        }
-                    case .source:
-                        await sink.stop(universe: universe)
-                        await source.send(universe: universe, dmx: self.dmxs[universe0Origin])
-                    case .sourceMultipeer:
-                        await sink.stop(universe: universe)
-                        await self.multipeerSource.send(universe: universe, dmx: self.dmxs[universe0Origin])
-                    }
-                }
-                try! await Task.sleep(for: .milliseconds(1000 / 30))
+        // feed initial source values
+        for i in 0..<sinkOrSources.count {
+            switch sinkOrSources[i] {
+            case .source, .sourceMultipeer: setCurrentToSource(index: i)
+            case .sink: Task {await sink.start(universe: UInt16(i + 1))}
             }
-            NSLog("%@", "finished loop for Demo app")
+        }
+
+        // sink sink.payloads
+        Task {
+            for await payloads in await sink.payloadsSequence {
+                for (universe, payload) in payloads {
+                    let i = Int(universe.value - 1)
+                    guard i < sinkOrSources.count, sinkOrSources[Int(i)] == .sink else { continue }
+                    dmxs[i] = payload.dmx.value
+                }
+            }
         }
     }
 
