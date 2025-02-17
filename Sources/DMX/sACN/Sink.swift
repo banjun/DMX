@@ -163,6 +163,14 @@ public actor Sink {
             }
         }
 
+        let sync = packet.framingLayer.synchronizationAddress
+        if sync != 0, payloads[sync.value] == nil {
+            NSLog("TODO: universe \(packet.framingLayer.universe) requires synchronization on \(sync) but it's not yet implemented")
+            // TODO: ensure listen to the universe, Task {await start(universe: sync.value)}
+            // TODO: bring {throttle | buffer and await sync} branch to the pipeline
+            // TODO: flush the pipeline on a sync packet
+        }
+
         let payload = Payload(packet: packet)
         payloads[packet.framingLayer.universe.value] = payload
         scheduler.receive(payload: payload)
