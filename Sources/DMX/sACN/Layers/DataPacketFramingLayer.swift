@@ -6,7 +6,7 @@ import Foundation
 /// Entertainment Technology
 /// Lightweight streaming protocol for transport
 /// of DMX512 using ACN
-public struct FramingLayer: MemoryMappedPacketOrLayer {
+public struct DataPacketFramingLayer: MemoryMappedPacketOrLayer {
     public static let memoryLayoutSize: Int = 77
 
     /// Protocol flags and length
@@ -49,7 +49,7 @@ public struct FramingLayer: MemoryMappedPacketOrLayer {
     /// Universe Number Identifier for a distinct stream of DMX512-A [DMX] Data
     public var universe: UInt16BE
 
-    public init(flagsAndLength: FlagsAndLength = .init(rawValue: 0x7029), vector: Vector = .VECTOR_E131_DATA_PACKET, sourceName: UTF8Fixed64, priorityData: UInt8 = 100, synchronizationAddress: UInt16BE = 0, sequenceNumber: UInt8, options: Options = [], universe: UInt16BE) {
+    public init(flagsAndLength: FlagsAndLength = .init(rawValue: 0x7258), vector: Vector = .VECTOR_E131_DATA_PACKET, sourceName: UTF8Fixed64, priorityData: UInt8 = 100, synchronizationAddress: UInt16BE = 0, sequenceNumber: UInt8, options: Options = [], universe: UInt16BE) {
         self.flagsAndLength = flagsAndLength
         self.vector = .init(rawValue: vector.rawValue)
         self.sourceName = sourceName

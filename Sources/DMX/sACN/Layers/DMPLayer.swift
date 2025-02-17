@@ -35,7 +35,7 @@ public struct DMPLayer: MemoryMappedPacketOrLayer {
         }
     }
 
-    public init(flagsAndLength: FlagsAndLength = .init(rawValue: 0x72B0), vector: Vector = .VECTOR_DMP_SET_PROPERTY, addressTypeAndDataType: UInt8 = 0xA1, firstProopertyAddress: UInt16BE = 0, addressIncrement: UInt16BE = 1, propertyValueCount: UInt16BE = 513, propertyValues: PropertyValue) {
+    public init(flagsAndLength: FlagsAndLength = .init(rawValue: 0x720B), vector: Vector = .VECTOR_DMP_SET_PROPERTY, addressTypeAndDataType: UInt8 = 0xA1, firstProopertyAddress: UInt16BE = 0, addressIncrement: UInt16BE = 1, propertyValueCount: UInt16BE = 513, propertyValues: PropertyValue) {
         self.flagsAndLength = flagsAndLength
         self.vector = .init(rawValue: vector.rawValue)
         self.addressTypeAndDataType = addressTypeAndDataType
