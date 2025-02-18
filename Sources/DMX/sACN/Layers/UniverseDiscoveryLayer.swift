@@ -12,10 +12,7 @@ public struct UniverseDiscoveryLayer: MemoryMappedPacketOrLayer {
     /// Protocol flags and length
     public var flagsAndLength: FlagsAndLength // 0x7008 - 0x7408
     /// Identifies Universe Discovery data as universe list
-    public var vector: MemoryMappedEnum<Vector>
-    public enum Vector: UInt32BE {
-        case VECTOR_UNIVERSE_DISCOVERY_UNIVERSE_LIST = 0x00000001
-    }
+    public var vector: MemoryMappedEnum<Vectors.UniverseDiscovery>
     /// Packet Number: Identifier indicating which packet of N this is—pages start numbering at 0.
     public var page: UInt8
     /// Final Page: Page number of the final page to be transmitted.
@@ -42,7 +39,7 @@ public struct UniverseDiscoveryLayer: MemoryMappedPacketOrLayer {
         }
     }
 
-    public init(flagsAndLength: FlagsAndLength, vector: Vector = .VECTOR_UNIVERSE_DISCOVERY_UNIVERSE_LIST, page: UInt8, lastPage: UInt8, listOfUniverses: [UInt16BE]) {
+    public init(flagsAndLength: FlagsAndLength, vector: Vectors.UniverseDiscovery = .VECTOR_UNIVERSE_DISCOVERY_UNIVERSE_LIST, page: UInt8, lastPage: UInt8, listOfUniverses: [UInt16BE]) {
         self.flagsAndLength = flagsAndLength
         self.vector = .init(rawValue: vector.rawValue)
         self.page = page

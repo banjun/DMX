@@ -12,11 +12,7 @@ public struct DataPacketFramingLayer: MemoryMappedPacketOrLayer {
     /// Protocol flags and length
     public var flagsAndLength: FlagsAndLength
     /// Identifies 1.31 data as DMP Protocol PDU
-    public var vector: MemoryMappedEnum<Vector>
-    public enum Vector: UInt32BE {
-        /// DMX512-A [DMX] data
-        case VECTOR_E131_DATA_PACKET = 0x00000002
-    }
+    public var vector: MemoryMappedEnum<Vectors.Data>
     /// User Assigned Name of Source:  UTF-8 [UTF-8] encoded string, null-terminated
     public var sourceName: UTF8Fixed64    
     /// priority if multiple sources: 0-200, default of 100
@@ -49,7 +45,7 @@ public struct DataPacketFramingLayer: MemoryMappedPacketOrLayer {
     /// Universe Number Identifier for a distinct stream of DMX512-A [DMX] Data
     public var universe: UInt16BE
 
-    public init(flagsAndLength: FlagsAndLength = .init(rawValue: 0x7258), vector: Vector = .VECTOR_E131_DATA_PACKET, sourceName: UTF8Fixed64, priorityData: UInt8 = 100, synchronizationAddress: UInt16BE = 0, sequenceNumber: UInt8, options: Options = [], universe: UInt16BE) {
+    public init(flagsAndLength: FlagsAndLength = .init(rawValue: 0x7258), vector: Vectors.Data = .VECTOR_E131_DATA_PACKET, sourceName: UTF8Fixed64, priorityData: UInt8 = 100, synchronizationAddress: UInt16BE = 0, sequenceNumber: UInt8, options: Options = [], universe: UInt16BE) {
         self.flagsAndLength = flagsAndLength
         self.vector = .init(rawValue: vector.rawValue)
         self.sourceName = sourceName

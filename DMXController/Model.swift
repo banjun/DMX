@@ -9,7 +9,7 @@ import DMX
 //    let source = Source(transport: .unicast(host: "192.168.0.1"))
 //    let source = Source(transport: .directedBroadcast())
 #if os(macOS) || targetEnvironment(simulator)
-    let source = Source()
+    let source = Source(sendsUniverseDiscovery: true)
 #else
     let source = Source(transport: .directedBroadcast())
 #endif

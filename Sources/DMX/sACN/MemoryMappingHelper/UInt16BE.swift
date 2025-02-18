@@ -17,3 +17,6 @@ extension UInt16BE: Hashable {
     public static func == (lhs: UInt16BE, rhs: UInt16BE) -> Bool {lhs.value == rhs.value}
     public func hash(into hasher: inout Hasher) {value.hash(into: &hasher)}
 }
+extension UInt16BE: Comparable {
+    public static func < (lhs: UInt16BE, rhs: UInt16BE) -> Bool {lhs.value < rhs.value}
+}

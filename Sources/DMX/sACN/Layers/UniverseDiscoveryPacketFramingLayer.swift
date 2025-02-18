@@ -12,7 +12,7 @@ public struct UniverseDiscoveryPacketFramingLayer: MemoryMappedPacketOrLayer {
     /// Protocol flags and length
     public var flagsAndLength: FlagsAndLength // 0x7052 - 0x7452
     /// Identifies 1.31 data as Universe Discovery
-    public var vector: MemoryMappedEnum<Vector>
+    public var vector: MemoryMappedEnum<Vectors.Extended>
     public enum Vector: UInt32BE {
         /// (universe discovery
         case VECTOR_E131_EXTENDED_DISCOVERY = 0x00000002
