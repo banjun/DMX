@@ -6,7 +6,7 @@ import Foundation
 /// Entertainment Technology
 /// Lightweight streaming protocol for transport
 /// of DMX512 using ACN
-public struct UniverseDiscoveryPacketFramingLayer: MemoryMappedPacketOrLayer {
+public struct UniverseDiscoveryPacketFramingLayer: MemoryMappedPacketOrLayer, Sendable {
     public static let memoryLayoutSize: Int = 74
 
     /// Protocol flags and length

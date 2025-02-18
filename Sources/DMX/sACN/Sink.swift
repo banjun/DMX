@@ -46,10 +46,15 @@ public actor Sink {
         self.port = .init(rawValue: port)!
         self.ignoredRemoteEndpoints = ignoredRemoteEndpoints()
         self.scheduler = .init(interval: interval, resolver: resolver)
+        self.universeDiscoveryStream = .init {_ in} // dummy for init
+        Task {await setupIniverseDiscoveryStream()}
+    }
+    private func setupIniverseDiscoveryStream() {
+        self.universeDiscoveryStream = .init {universeDiscoveryStreamContinuation = $0}
     }
 
     private var buffers: [UInt16BE: Data?] = [:]
-    public func start(universe: UInt16) async {
+    public func start(universe: UInt16) {
         let universe: UInt16BE = .init(integerLiteral: universe)
 
         let endpoint = NWEndpoint(sACNUniverse: universe, port: port)
@@ -80,6 +85,9 @@ public actor Sink {
         }
 
         connectionGroup.start(queue: queue)
+    }
+    public func startUniverseDiscovery() {
+        start(universe: UniverseDiscoverySource.E131_DISCOVERY_UNIVERSE.value)
     }
 
     private var multipeerReceiverCancellable: AnyCancellable?
@@ -116,7 +124,7 @@ public actor Sink {
         let universeToMatch: UInt16BE?
         var buffer: Data
         if case .hostPort(host: .ipv4(let v4host), port: _) = message.localEndpoint,
-           v4host.rawValue[0] == 239, v4host.rawValue[1] == 255 {
+           v4host.rawValue[0] == 239, v4host.rawValue[1] == 255, UInt16BE(rawValue: (v4host.rawValue[2], v4host.rawValue[3])) != UniverseDiscoverySource.E131_DISCOVERY_UNIVERSE {
             let universe = UInt16BE(rawValue: (v4host.rawValue[2], v4host.rawValue[3]))
             universeToMatch = universe
 
@@ -132,6 +140,30 @@ public actor Sink {
                 return
             }
             buffer = data
+        }
+
+        guard buffer.count >= RootLayer.memoryLayoutSize, let rootLayer = RootLayer(parsing: buffer) else {
+            NSLog("%@", "buffer.count \(buffer.count) should be equal (or greater) than RootLayer \(RootLayer.memoryLayoutSize) bytes")
+            return
+        }
+
+        switch rootLayer.vector.value {
+        case .VECTOR_ROOT_E131_DATA?: break // nominal
+        case .VECTOR_ROOT_E131_EXTENDED?:
+            // process universe discovery
+            guard buffer.count >= UniverseDiscoveryPacket.minMemoryLayoutSize else {
+                NSLog("%@", "buffer.count \(buffer.count) should be equal (or greater) than \(UniverseDiscoveryPacket.minMemoryLayoutSize) bytes")
+                return
+            }
+            guard let packet = UniverseDiscoveryPacket(parsing: buffer, allowingZeroPadding: true) else {
+                NSLog("%@", "buffer is not universe discovery packet") // possibly Synchronization Packet
+                return
+            }
+            universeDiscoveryStreamContinuation?.yield(packet)
+            return // do not hold as data packet
+        case nil:
+            NSLog("%@", "unknown RootLayer.vector = \(rootLayer.vector)")
+            return
         }
 
         guard buffer.count >= DataPacket.memoryLayoutSize else {
@@ -182,5 +214,25 @@ public actor Sink {
         guard var members = multicastGroup?.members, let i = members.firstIndex(of: endpoint) else { return }
         members.remove(at: i)
         multicastGroup = members.isEmpty ? nil : try! NWMulticastGroup(for: members)
+    }
+
+    private var universeDiscoveryStream: AsyncStream<UniverseDiscoveryPacket>
+    private var universeDiscoveryStreamContinuation: AsyncStream<UniverseDiscoveryPacket>.Continuation?
+    public var universeDiscoverySequence: some AsyncSequence<[RootLayer.CID: (UTF8Fixed64, [UInt16BE])], Never> & Sendable {
+        var activePackets: [(Date, UniverseDiscoveryPacket)] = []
+        return universeDiscoveryStream.map { v in
+            let now = Date()
+            activePackets = activePackets.filter {now.timeIntervalSince($0.0) < UniverseDiscoverySource.E131_UNIVERSE_DISCOVERY_INTERVAL}
+            activePackets.append((now, v))
+            return activePackets.map(\.1)
+        }.map { (activePackets: [UniverseDiscoveryPacket]) in
+            [RootLayer.CID: [UniverseDiscoveryPacket]](grouping: activePackets) {
+                $0.rootLayer.cid
+            }
+            .mapValues { (packets: [UniverseDiscoveryPacket]) in
+                let universes: Set<UInt16BE> = .init(packets.flatMap(\.universeDiscoveryLayer.listOfUniverses))
+                return (packets.first!.framingLayer.sourceName, Array(universes).sorted())
+            }
+        }
     }
 }

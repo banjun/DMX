@@ -100,6 +100,14 @@ import DMX
                 }
             }
         }
+
+        // universe discovery. TODO: UI
+        Task {
+            await sink.startUniverseDiscovery()
+            for await discoveries in await sink.universeDiscoverySequence {
+                NSLog("%@", "universe discovery: \(discoveries)")
+            }
+        }
     }
 
     // effective when using directed broadcast on source
