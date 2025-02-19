@@ -33,11 +33,13 @@ public actor Sink {
         public var universe: UInt16BE
         public var seq: UInt8
         public var source: String
+        public var cid: RootLayer.CID
         public var dmx: DMX
         init(packet: DataPacket) {
             self.universe = packet.framingLayer.universe
             self.seq = packet.framingLayer.sequenceNumber
             self.source = packet.framingLayer.sourceName.value
+            self.cid = packet.rootLayer.cid
             self.dmx = packet.dmpLayer.propertyValues.dmx
         }
     }
@@ -46,8 +48,13 @@ public actor Sink {
         self.port = .init(rawValue: port)!
         self.ignoredRemoteEndpoints = ignoredRemoteEndpoints()
         self.scheduler = .init(interval: interval, resolver: resolver)
-        self.universeDiscoveryStream = .init {_ in} // dummy for init
+        self.recentPayloadsStream = .init {_ in} // dummy for init
+        self.universeDiscoveryStream = .init {_ in} // dummy for initc
+        Task {await setupRecentPayloadsStream()}
         Task {await setupIniverseDiscoveryStream()}
+    }
+    private func setupRecentPayloadsStream() {
+        self.recentPayloadsStream = .init {recentPayloadsStreamContinuation = $0}
     }
     private func setupIniverseDiscoveryStream() {
         self.universeDiscoveryStream = .init {universeDiscoveryStreamContinuation = $0}
@@ -71,7 +78,7 @@ public actor Sink {
         connectionGroup.setReceiveHandler { [weak self] message, data, isCompleted in
             guard let self, let data else { return }
             Task {
-                await checkAndHold(message: message, data: data, isCompleted: isCompleted)
+                await receiveFromNWConnection(message: message, data: data, isCompleted: isCompleted)
             }
         }
         connectionGroup.stateUpdateHandler = { state in
@@ -96,11 +103,7 @@ public actor Sink {
             multipeerReceiverCancellable = multipeerReceiver?.sink { [weak self] data in
                 guard let self else { return }
                 Task {
-                    guard let packet = DataPacket(parsing: data) else {
-                        NSLog("%@", "unknown DataPacket(parsing: buffer) error for buffer: \(data.map {String(format: "%02X", $0)}.joined(separator: " "))")
-                        return
-                    }
-                    await self.checkAndHold(packet: packet)
+                    await self.parseDataOrDiscovery(data: data, pathDescription: "Multipeer")
                 }
             }
         }
@@ -113,7 +116,7 @@ public actor Sink {
         self.multipeerReceiver = nil
     }
 
-    private func checkAndHold(message: NWConnectionGroup.Message, data: Data, isCompleted: Bool) {
+    private func receiveFromNWConnection(message: NWConnectionGroup.Message, data: Data, isCompleted: Bool) {
         if let remoteEndpoint = message.remoteEndpoint {
             guard !self.ignoredRemoteEndpoints.contains(remoteEndpoint) else {
                 // NSLog("%@", "ignored: receive from \(remoteEndpoint)")
@@ -142,6 +145,10 @@ public actor Sink {
             buffer = data
         }
 
+        parseDataOrDiscovery(data: buffer, universeToMatch: universeToMatch, pathDescription: message.localEndpoint?.debugDescription ?? "unknown network")
+    }
+
+    private func parseDataOrDiscovery(data buffer: Data, universeToMatch: UInt16BE? = nil, pathDescription: String) {
         guard buffer.count >= RootLayer.memoryLayoutSize, let rootLayer = RootLayer(parsing: buffer) else {
             NSLog("%@", "buffer.count \(buffer.count) should be equal (or greater) than RootLayer \(RootLayer.memoryLayoutSize) bytes")
             return
@@ -159,7 +166,7 @@ public actor Sink {
                 NSLog("%@", "buffer is not universe discovery packet") // possibly Synchronization Packet
                 return
             }
-            universeDiscoveryStreamContinuation?.yield(packet)
+            universeDiscoveryStreamContinuation?.yield((packet, pathDescription))
             return // do not hold as data packet
         case nil:
             NSLog("%@", "unknown RootLayer.vector = \(rootLayer.vector)")
@@ -178,7 +185,7 @@ public actor Sink {
 
         if let universeToMatch {
             guard packet.framingLayer.universe == universeToMatch else {
-                NSLog("%@", "packet.framingLayer.universe should be = \(universeToMatch) but \(packet.framingLayer.universe) on this connection. local = \(String(describing: message.localEndpoint?.debugDescription))")
+                NSLog("%@", "packet.framingLayer.universe should be = \(universeToMatch) but \(packet.framingLayer.universe) on this connection. path = \(pathDescription))")
                 return
             }
         }
@@ -206,6 +213,7 @@ public actor Sink {
         let payload = Payload(packet: packet)
         payloads[packet.framingLayer.universe.value] = payload
         scheduler.receive(payload: payload)
+        recentPayloadsStreamContinuation?.yield(payload)
     }
 
     public func stop(universe: UInt16) {
@@ -216,22 +224,39 @@ public actor Sink {
         multicastGroup = members.isEmpty ? nil : try! NWMulticastGroup(for: members)
     }
 
-    private var universeDiscoveryStream: AsyncStream<UniverseDiscoveryPacket>
-    private var universeDiscoveryStreamContinuation: AsyncStream<UniverseDiscoveryPacket>.Continuation?
-    public var universeDiscoverySequence: some AsyncSequence<[RootLayer.CID: (UTF8Fixed64, [UInt16BE])], Never> & Sendable {
-        var activePackets: [(Date, UniverseDiscoveryPacket)] = []
+    // MARK: - Observation for Network Status
+
+    private var recentPayloadsStream: AsyncStream<Payload>
+    private var recentPayloadsStreamContinuation: AsyncStream<Payload>.Continuation?
+    public var recentPayloadsSequence: some AsyncSequence<[UInt16BE: [RootLayer.CID: (Date, Payload)]], Never> & Sendable {
+        var payloads: [UInt16BE: [RootLayer.CID: (Date, Payload)]] = [:]
+        let expire: TimeInterval = 10
+        return recentPayloadsStream.map {
+            let now = Date()
+            payloads = payloads.mapValues {$0.filter {now.timeIntervalSince($0.value.0) < expire}}.filter {!$0.value.isEmpty}
+            var p = payloads[$0.universe, default: [:]]
+            p[$0.cid] = (now, $0)
+            payloads[$0.universe] = p
+            return payloads
+        }._throttle(for: .milliseconds(0.1), latest: true)
+    }
+
+    private var universeDiscoveryStream: AsyncStream<(UniverseDiscoveryPacket, String)>
+    private var universeDiscoveryStreamContinuation: AsyncStream<(UniverseDiscoveryPacket, String)>.Continuation?
+    public var universeDiscoverySequence: some AsyncSequence<[RootLayer.CID: (UTF8Fixed64, String, [UInt16BE])], Never> & Sendable {
+        var activePackets: [(Date, UniverseDiscoveryPacket, String)] = []
         return universeDiscoveryStream.map { v in
             let now = Date()
             activePackets = activePackets.filter {now.timeIntervalSince($0.0) < UniverseDiscoverySource.E131_UNIVERSE_DISCOVERY_INTERVAL}
-            activePackets.append((now, v))
-            return activePackets.map(\.1)
-        }.map { (activePackets: [UniverseDiscoveryPacket]) in
-            [RootLayer.CID: [UniverseDiscoveryPacket]](grouping: activePackets) {
-                $0.rootLayer.cid
+            activePackets.append((now, v.0, v.1))
+            return activePackets.map {($0.1, $0.2)}
+        }.map { (activePackets: [(UniverseDiscoveryPacket, String)]) in
+            [RootLayer.CID: [(UniverseDiscoveryPacket, String)]](grouping: activePackets) {
+                $0.0.rootLayer.cid
             }
-            .mapValues { (packets: [UniverseDiscoveryPacket]) in
-                let universes: Set<UInt16BE> = .init(packets.flatMap(\.universeDiscoveryLayer.listOfUniverses))
-                return (packets.first!.framingLayer.sourceName, Array(universes).sorted())
+            .mapValues { (packets: [(UniverseDiscoveryPacket, String)]) in
+                let universes: Set<UInt16BE> = .init(packets.flatMap(\.0.universeDiscoveryLayer.listOfUniverses))
+                return (packets.first!.0.framingLayer.sourceName, packets.first!.1, Array(universes).sorted())
             }
         }
     }

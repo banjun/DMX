@@ -25,3 +25,7 @@ public struct UTF8Fixed64: CustomStringConvertible, Sendable {
     }
     public var description: String {"\"\(value ?? "invalid utf8 \(String(describing: rawValue))")\""}
 }
+extension UTF8Fixed64: Comparable {
+    public static func == (lhs: UTF8Fixed64, rhs: UTF8Fixed64) -> Bool {lhs.value == rhs.value}
+    public static func < (lhs: UTF8Fixed64, rhs: UTF8Fixed64) -> Bool {lhs.value < rhs.value}
+}
