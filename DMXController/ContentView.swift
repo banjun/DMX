@@ -58,9 +58,9 @@ struct DMXStatusTopOrnamentModifier: ViewModifier {
 
             }
 #else
-        UniverseDiscovery()
+        UniverseDiscovery().layoutPriority(0)
         Divider()
-        content
+        content.layoutPriority(1)
 #endif
     }
 }

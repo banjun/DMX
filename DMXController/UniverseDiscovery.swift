@@ -3,15 +3,12 @@ import DMX
 
 struct UniverseDiscovery: View {
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack(alignment: .top) {
-                DiscoveredUniverses()
-                Divider()
-                RecentPayloads()
-            }
+        HStack(alignment: .top) {
+            DiscoveredUniverses()
+            Divider()
+            RecentPayloads()
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .fixedSize(horizontal: false, vertical: true)
+        .frame(maxWidth: .infinity, alignment: .topLeading)
         .padding()
     }
 
