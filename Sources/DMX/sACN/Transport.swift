@@ -86,6 +86,7 @@ import Observation
         case .session(let session):
             guard !session.connectedPeers.isEmpty else { return }
             do {
+                // NSLog("%@", "sending multipeer")
                 try session.send(data, toPeers: session.connectedPeers, with: .unreliable)
             } catch {
                 NSLog("%@", "MCSession send error = \(String(describing: error))")
