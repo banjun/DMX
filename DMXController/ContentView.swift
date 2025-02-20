@@ -37,6 +37,31 @@ struct ContentView: View {
             }
         }
         .padding()
+        .modifier(DMXStatusTopOrnamentModifier())
+    }
+}
+
+struct DMXStatusTopOrnamentModifier: ViewModifier {
+    @State private var isExpanded = false
+    func body(content: Content) -> some View {
+#if os(visionOS)
+        content
+            .ornament(attachmentAnchor: .scene(.top), contentAlignment: .bottom) {
+                Toggle("DMX Status", isOn: $isExpanded).toggleStyle(.button)
+                    .glassBackgroundEffect()
+                    .padding()
+                if isExpanded {
+                    UniverseDiscovery()
+                        .glassBackgroundEffect()
+                        .padding()
+                }
+
+            }
+#else
+        UniverseDiscovery().layoutPriority(0)
+        Divider()
+        content.layoutPriority(1)
+#endif
     }
 }
 

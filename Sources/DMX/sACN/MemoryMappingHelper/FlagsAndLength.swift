@@ -9,4 +9,9 @@ public struct FlagsAndLength: RawRepresentable, CustomStringConvertible, Sendabl
         set {rawValue = .init(rawValue: (UInt8(flag << 4) | UInt8((newValue >> 8) & 0x0F), UInt8(newValue & 0xFF)))}
     }
     public var description: String {"(flag: \(flag), pduLength: \(pduLength))"}
+
+    public init(pduLength: UInt16) {
+        self.init(rawValue: 0x7000)
+        self.pduLength = pduLength
+    }
 }

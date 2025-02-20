@@ -10,12 +10,13 @@ public struct DataPacket: MemoryMappedPacketOrLayer {
     public static let memoryLayoutSize: Int = 638
 
     public var rootLayer: RootLayer
-    public var framingLayer: FramingLayer
+    public var framingLayer: DataPacketFramingLayer
     public var dmpLayer: DMPLayer
     
-    public init(rootLayer: RootLayer, framingLayer: FramingLayer, dmpLayer: DMPLayer) {
+    public init(rootLayer: RootLayer, framingLayer: DataPacketFramingLayer, dmpLayer: DMPLayer) {
         self.rootLayer = rootLayer
         self.framingLayer = framingLayer
         self.dmpLayer = dmpLayer
     }
 }
+

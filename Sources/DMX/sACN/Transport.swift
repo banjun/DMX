@@ -74,7 +74,11 @@ import Observation
         switch underlyingTransport {
         case .connection(let connection):
             connection.send(content: data, completion: .contentProcessed { [weak self] error in
-                self?.localEndpoint = connection.currentPath?.localEndpoint
+                if self?.localEndpoint != connection.currentPath?.localEndpoint {
+                    Task { @MainActor in
+                        self?.localEndpoint = connection.currentPath?.localEndpoint
+                    }
+                }
                 if let error {
                     NSLog("%@", "send complettion, debugInfo = \(String(describing: debugInfo())), with error = \(String(describing: error))")
                 }

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct UTF8Fixed64: CustomStringConvertible {
+public struct UTF8Fixed64: CustomStringConvertible, Sendable {
     public var rawValue: (CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     public init(value: String) {
         self.value = value
@@ -24,4 +24,8 @@ public struct UTF8Fixed64: CustomStringConvertible {
         }
     }
     public var description: String {"\"\(value ?? "invalid utf8 \(String(describing: rawValue))")\""}
+}
+extension UTF8Fixed64: Comparable {
+    public static func == (lhs: UTF8Fixed64, rhs: UTF8Fixed64) -> Bool {lhs.value == rhs.value}
+    public static func < (lhs: UTF8Fixed64, rhs: UTF8Fixed64) -> Bool {lhs.value < rhs.value}
 }
