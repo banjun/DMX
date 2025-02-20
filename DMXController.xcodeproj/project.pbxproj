@@ -9,10 +9,12 @@
 /* Begin PBXBuildFile section */
 		633332DD2D5451C800A038F1 /* DMX in Frameworks */ = {isa = PBXBuildFile; productRef = 633332DC2D5451C800A038F1 /* DMX */; };
 		639028372D5452A400F2585C /* DMX in Frameworks */ = {isa = PBXBuildFile; productRef = 639028362D5452A400F2585C /* DMX */; };
+		63ED13D82D67372C0098E980 /* DMX in Frameworks */ = {isa = PBXBuildFile; productRef = 63ED13D72D67372C0098E980 /* DMX */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		633332BF2D54517700A038F1 /* DMXController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DMXController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		63ED13C72D6737100098E980 /* DMXRelay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DMXRelay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -34,6 +36,11 @@
 			path = DMXController;
 			sourceTree = "<group>";
 		};
+		63ED13C82D6737100098E980 /* DMXRelay */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DMXRelay;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +53,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		63ED13C42D6737100098E980 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63ED13D82D67372C0098E980 /* DMX in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -53,6 +68,8 @@
 			isa = PBXGroup;
 			children = (
 				633332C12D54517700A038F1 /* DMXController */,
+				63ED13C82D6737100098E980 /* DMXRelay */,
+				63ED13D62D67372C0098E980 /* Frameworks */,
 				633332C02D54517700A038F1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,8 +78,16 @@
 			isa = PBXGroup;
 			children = (
 				633332BF2D54517700A038F1 /* DMXController.app */,
+				63ED13C72D6737100098E980 /* DMXRelay.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		63ED13D62D67372C0098E980 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -92,6 +117,29 @@
 			productReference = 633332BF2D54517700A038F1 /* DMXController.app */;
 			productType = "com.apple.product-type.application";
 		};
+		63ED13C62D6737100098E980 /* DMXRelay */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63ED13D52D6737180098E980 /* Build configuration list for PBXNativeTarget "DMXRelay" */;
+			buildPhases = (
+				63ED13C32D6737100098E980 /* Sources */,
+				63ED13C42D6737100098E980 /* Frameworks */,
+				63ED13C52D6737100098E980 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				63ED13C82D6737100098E980 /* DMXRelay */,
+			);
+			name = DMXRelay;
+			packageProductDependencies = (
+				63ED13D72D67372C0098E980 /* DMX */,
+			);
+			productName = DMXRelay;
+			productReference = 63ED13C72D6737100098E980 /* DMXRelay.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -103,6 +151,9 @@
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					633332BE2D54517700A038F1 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					63ED13C62D6737100098E980 = {
 						CreatedOnToolsVersion = 16.2;
 					};
 				};
@@ -125,6 +176,7 @@
 			projectRoot = "";
 			targets = (
 				633332BE2D54517700A038F1 /* DMXController */,
+				63ED13C62D6737100098E980 /* DMXRelay */,
 			);
 		};
 /* End PBXProject section */
@@ -137,10 +189,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		63ED13C52D6737100098E980 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		633332BB2D54517700A038F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63ED13C32D6737100098E980 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -346,6 +412,60 @@
 			};
 			name = Release;
 		};
+		63ED13D32D6737180098E980 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DMXRelay/DMXRelay.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DMXRelay/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.banjun.DMXRelay;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		63ED13D42D6737180098E980 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DMXRelay/DMXRelay.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DMXRelay/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.banjun.DMXRelay;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -367,6 +487,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		63ED13D52D6737180098E980 /* Build configuration list for PBXNativeTarget "DMXRelay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63ED13D32D6737180098E980 /* Debug */,
+				63ED13D42D6737180098E980 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
@@ -383,6 +512,11 @@
 		};
 		639028362D5452A400F2585C /* DMX */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = DMX;
+		};
+		63ED13D72D67372C0098E980 /* DMX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 639028352D5452A400F2585C /* XCLocalSwiftPackageReference "../DMX" */;
 			productName = DMX;
 		};
 /* End XCSwiftPackageProductDependency section */
