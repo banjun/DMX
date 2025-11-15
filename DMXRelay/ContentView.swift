@@ -6,7 +6,7 @@ struct ContentView: View {
         Divider()
         Grid {
             GridRow {
-                Text("Universe \(model.universeToDevice)").fontWeight(.bold)
+                Text("Universe \(model.universeToDevice.description)").fontWeight(.bold)
                 Text("<-- Multipeer Connectivity --").fixedSize()
                 if let rate = model.rates[model.universeFromLocal], rate != 0 {
                     Text("\(String(format: "%2.1f Hz", rate))").monospacedDigit().fontWeight(.bold)
@@ -14,7 +14,7 @@ struct ContentView: View {
                     Image(systemName: "app").frame(width: 20)
                 }
                 Text("<-- localhost:\(model.sinkPort, format: .number.grouping(.never)) --").fixedSize()
-                Text("Universe \(model.universeFromLocal.value)").fontWeight(.bold)
+                Text("Universe \(model.universeFromLocal.description)").fontWeight(.bold)
             }
             GridRow {
                 Text("")
@@ -24,7 +24,7 @@ struct ContentView: View {
                 Text("")
             }
             GridRow {
-                Text("Universe \(model.universeFromDevice)").fontWeight(.bold)
+                Text("Universe \(model.universeFromDevice.description)").fontWeight(.bold)
                 Text("-- Multipeer Connectivity -->").fixedSize()
                 if let rate = model.rates[model.universeFromDevice], rate != 0 {
                     Text("\(String(format: "%2.1f Hz", rate))").monospacedDigit().fontWeight(.bold)
@@ -32,7 +32,7 @@ struct ContentView: View {
                     Image(systemName: "app").frame(width: 20)
                 }
                 Text("-- localhost:\(model.sourcePortOnLocal, format: .number.grouping(.never)) -->").fixedSize()
-                Text("Universe \(model.universeToLocal)").fontWeight(.bold)
+                Text("Universe \(model.universeToLocal.description)").fontWeight(.bold)
             }
         }
         .fixedSize()

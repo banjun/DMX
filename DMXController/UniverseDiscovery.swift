@@ -22,7 +22,7 @@ struct UniverseDiscovery: View {
                         if !universes.isEmpty {
                             Text(try! AttributedString(markdown: "**\(universes)** sourced by " + name.value + " via \(path)")).font(.body)
                         } else {
-                            Text("\(name) via \(path)").font(.body).foregroundStyle(.quaternary)
+                            Text("\(name.description) via \(path)").font(.body).foregroundStyle(.quaternary)
                         }
                     }
                 }
@@ -41,7 +41,7 @@ struct UniverseDiscovery: View {
                         ForEach(model.recentPayloads.keys.sorted(), id: \.self) { universe in
                             //                            HStack(alignment: .top, spacing: 4) {
                             GridRow(alignment: .top) {
-                                Text("Universe \(universe)").font(.body).fixedSize()
+                                Text("Universe \(universe.description)").font(.body).fixedSize()
                                 VStack(alignment: .leading) {
                                     ForEach(Array(model.recentPayloads[universe]!.values), id: \.1.cid) { date, payload in
                                         HStack(alignment: .firstTextBaseline, spacing: 4) {
