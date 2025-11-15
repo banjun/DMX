@@ -1,24 +1,18 @@
 import Foundation
 
-public struct UTF8Fixed64: CustomStringConvertible, Sendable {
-    public var rawValue: (CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar, CChar) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+public struct UTF8Fixed64: RawRepresentable, CustomStringConvertible, Sendable {
+    public var rawValue: InlineArray<64, UInt8> = .init(repeating: 0)
+    public init(rawValue: RawValue) {self.rawValue = rawValue}
     public init(value: String) {
         self.value = value
     }
     public var value: String! {
-        get {
-            var buffer = ContiguousArray<CChar>(repeating: 0, count: 64 + 1)
-            return buffer.withUnsafeMutableBytes { b in
-                _ = withUnsafeBytes(of: rawValue) { r in
-                    r.copyBytes(to: b, count: 64)
-                }
-                return String(utf8String: b.assumingMemoryBound(to: CChar.self).baseAddress!)
-            }
-        }
+        get {String(copying: .init(unchecked: rawValue.span.extracting(first: rawValue.indices.first {rawValue[$0] == 0} ?? RawValue.count)))}
         set {
-            _ = newValue.utf8CString.prefix(64).withUnsafeBytes { v in
-                withUnsafeMutableBytes(of: &rawValue) { r in
-                    v.copyBytes(to: r, count: v.count)
+            let span = newValue.utf8Span.span
+            span.extracting(first: RawValue.count).withUnsafeBytes { src in
+                withUnsafeMutableBytes(of: &rawValue) { dst in
+                    dst.copyBytes(from: src)
                 }
             }
         }
