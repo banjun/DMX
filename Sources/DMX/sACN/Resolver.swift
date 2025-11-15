@@ -32,7 +32,7 @@ public enum Resolvers {
     public static var newest: some Resolver {Resolvers.Newest()}
     public struct Newest: Resolver {
         @inlinable public func resolve(into old: inout DMX, new: DMX) {
-            old.value = new.value
+            old = new
         }
     }
 
