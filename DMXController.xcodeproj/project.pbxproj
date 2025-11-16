@@ -28,6 +28,13 @@
 			);
 			target = 633332BE2D54517700A038F1 /* DMXController */;
 		};
+		EAB514CF2ECA309D00AB9EC2 /* Exceptions for "DMXRealityKit" folder in "DMXRealityKit" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = EA7DBF3D2EC8F3750091F328 /* DMXRealityKit */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -46,6 +53,9 @@
 		};
 		EA7DBF3F2EC8F3750091F328 /* DMXRealityKit */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EAB514CF2ECA309D00AB9EC2 /* Exceptions for "DMXRealityKit" folder in "DMXRealityKit" target */,
+			);
 			path = DMXRealityKit;
 			sourceTree = "<group>";
 		};
@@ -569,6 +579,7 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DMXRealityKit/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -617,6 +628,7 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DMXRealityKit/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
