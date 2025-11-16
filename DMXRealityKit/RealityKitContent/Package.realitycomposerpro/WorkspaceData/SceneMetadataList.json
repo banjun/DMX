@@ -3,6 +3,14 @@
     "objectMetadataList" : [
       [
         "9C79E0D1-D390-41E3-A184-67013B7D1164",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9C79E0D1-D390-41E3-A184-67013B7D1164",
         "Root",
         "Sphere",
         "DMXMaterial"
@@ -19,9 +27,13 @@
       {
         "isExpanded" : true,
         "isLocked" : false
-      },
+      }
+    ]
+  },
+  "B429668E-7C1B-4EA3-8E58-CFC9AD07DE1B" : {
+    "objectMetadataList" : [
       [
-        "9C79E0D1-D390-41E3-A184-67013B7D1164",
+        "B429668E-7C1B-4EA3-8E58-CFC9AD07DE1B",
         "Root"
       ],
       {
@@ -35,7 +47,7 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "DMXYawAsModelOffset"
+        "DMXVisualizer"
       ],
       {
         "isExpanded" : true,
@@ -44,7 +56,8 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "DMXPitchAsModelOffset"
+        "MovieStudioSpotlight",
+        "geom"
       ],
       {
         "isExpanded" : true,
@@ -53,7 +66,25 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "DMXDecode"
+        "Cube"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovieStudioSpotlight"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "DMXMaterial"
       ],
       {
         "isExpanded" : true,
@@ -63,7 +94,51 @@
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
         "DMXVisualizer",
-        "Cube_4"
+        "Cube_3"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovieStudioSpotlight",
+        "geom",
+        "realistic"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovieStudioSpotlight",
+        "geom",
+        "realistic",
+        "materials",
+        "spotlight_studio_realistic_01_mat_sg"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "DMXVisualizer",
+        "Cube_5"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "DMXVisualizer",
+        "Cube_2"
       ],
       {
         "isExpanded" : true,
@@ -83,62 +158,7 @@
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
         "DMXVisualizer",
-        "Cube_5"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "DMXVisualizer"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "DMXDecodeRGB"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "pitch_offset"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "DMXVisualizer",
         "Cube_1"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "DMXVisualizer",
-        "Cube_2"
       ],
       {
         "isExpanded" : true,
@@ -156,9 +176,29 @@
       },
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovieStudioSpotlight",
+        "geom",
+        "realistic",
+        "materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
         "DMXVisualizer",
-        "Cube_3"
+        "Cube_4"
       ],
       {
         "isExpanded" : true,
@@ -167,16 +207,56 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "yaw_offset"
+        "MovieStudioSpotlight",
+        "geom",
+        "realistic",
+        "materials",
+        "spotlight_studio_realistic_glass_01_matsg"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "EC97C9EE-C60B-4789-B427-70387AB3B55D" : {
+    "objectMetadataList" : [
+      [
+        "EC97C9EE-C60B-4789-B427-70387AB3B55D",
+        "DMXDecodeRGB",
+        "DMXDecodeG"
       ],
       {
         "isExpanded" : true,
         "isLocked" : false
       },
       [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "Cube"
+        "EC97C9EE-C60B-4789-B427-70387AB3B55D",
+        "DMXPitchAsModelOffset"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "EC97C9EE-C60B-4789-B427-70387AB3B55D",
+        "DMXYawAsModelOffset"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "EC97C9EE-C60B-4789-B427-70387AB3B55D",
+        "DMXDecodeRGB"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "EC97C9EE-C60B-4789-B427-70387AB3B55D",
+        "Root"
       ],
       {
         "isExpanded" : true,

@@ -10,6 +10,9 @@ struct ContentView: View {
         RealityView { content in
             DMXTextureUpdateSystem.registerSystemAndComponents()
             let scene = try! await Entity(named: "Scene", in: realityKitContentBundle)
+#if os(visionOS)
+            scene.scale = .init(repeating: 0.1) // for Window RealityView
+#endif
             content.add(scene)
 
             let dmxHolderEntity = Entity()

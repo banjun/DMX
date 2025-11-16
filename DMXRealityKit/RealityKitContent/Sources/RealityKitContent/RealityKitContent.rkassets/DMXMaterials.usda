@@ -1,0 +1,873 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (494.40.1)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+reorder rootPrims = ["Root", "DMXDecode", "DMXDecodeRGB", "DMXPitchAsModelOffset", "DMXYawAsModelOffset", "pitch_offset", "yaw_offset", "DMXDecodeR"]
+
+def Xform "Root"
+{
+}
+
+def NodeGraph "DMXDecode"
+{
+    int inputs:ch (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (586.44226, 360.74844)
+                int stackingOrderInSubgraph = 912
+            }
+        }
+    )
+    asset inputs:DMX (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (1301.75, 27.5)
+                int stackingOrderInSubgraph = 582
+            }
+        }
+    )
+    int inputs:start = 1 (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (488.75836, 264.19962)
+                int stackingOrderInSubgraph = 920
+            }
+        }
+    )
+    float outputs:Extract_out.connect = </DMXDecode/Switch.outputs:out>
+    float2 ui:nodegraph:node:pos = (159.28645, -79.746925)
+    int ui:nodegraph:node:stackingOrder = 492
+    float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (2231.7227, 455.98672)
+    int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 703
+
+    def Shader "Floor"
+    {
+        uniform token info:id = "ND_floor_float"
+        float inputs:in.connect = </DMXDecode/Divide.outputs:out>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (1203.3702, 273.23947)
+        int ui:nodegraph:node:stackingOrder = 917
+    }
+
+    def Shader "Modulo"
+    {
+        uniform token info:id = "ND_modulo_float"
+        float inputs:in1.connect = </DMXDecode/Add.outputs:out>
+        float inputs:in2 = 4
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (1091.3136, 380.63812)
+        int ui:nodegraph:node:stackingOrder = 821
+    }
+
+    def Shader "Image2DPixel"
+    {
+        uniform token info:id = "ND_RealityKitTexture2DPixel_vector4"
+        float inputs:bias
+        string inputs:border_color = "transparent_black"
+        float4 inputs:default
+        float inputs:dynamic_min_lod_clamp
+        asset inputs:file.connect = </DMXDecode.inputs:DMX>
+        string inputs:filter = "nearest"
+        float inputs:max_lod_clamp = 0
+        float inputs:min_lod_clamp
+        int2 inputs:offset.connect = None
+        float2 inputs:texcoord.connect = </DMXDecode/Combine2.outputs:out>
+        string inputs:u_wrap_mode
+        float4 outputs:out
+        float2 ui:nodegraph:node:pos = (1615, 206.62955)
+        int ui:nodegraph:node:stackingOrder = 722
+        string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:out", "outputs:out"]
+    }
+
+    def Shader "Convert"
+    {
+        uniform token info:id = "ND_convert_integer_float"
+        int inputs:in.connect = </DMXDecode.inputs:ch>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (762.9412, 357.748)
+        int ui:nodegraph:node:stackingOrder = 912
+    }
+
+    def Shader "Convert_1"
+    {
+        uniform token info:id = "ND_convert_integer_float"
+        int inputs:in.connect = </DMXDecode.inputs:start>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (649.3207, 264.0652)
+        int ui:nodegraph:node:stackingOrder = 912
+    }
+
+    def Shader "Divide"
+    {
+        uniform token info:id = "ND_divide_float"
+        float inputs:in1.connect = </DMXDecode/Add.outputs:out>
+        float inputs:in2 = 4
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (1091.3136, 272.13812)
+        int ui:nodegraph:node:stackingOrder = 821
+    }
+
+    def Shader "Add"
+    {
+        uniform token info:id = "ND_add_float"
+        float inputs:in1.connect = </DMXDecode/Subtract.outputs:out>
+        float inputs:in2.connect = </DMXDecode/Convert.outputs:out>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (914.648, 332.9764)
+        int ui:nodegraph:node:stackingOrder = 912
+    }
+
+    def Shader "Switch"
+    {
+        uniform token info:id = "ND_switch_float"
+        float inputs:in1.connect = </DMXDecode/Separate4.outputs:outx>
+        float inputs:in2.connect = </DMXDecode/Separate4.outputs:outy>
+        float inputs:in3.connect = </DMXDecode/Separate4.outputs:outz>
+        float inputs:in4.connect = </DMXDecode/Separate4.outputs:outw>
+        float inputs:in5 = 0
+        float inputs:in6
+        float inputs:in7
+        float inputs:in9
+        float inputs:in10
+        float inputs:which.connect = </DMXDecode/Modulo.outputs:out>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (2066.8599, 357.09262)
+        int ui:nodegraph:node:stackingOrder = 720
+    }
+
+    def Shader "Separate4"
+    {
+        uniform token info:id = "ND_separate4_vector4"
+        float4 inputs:in.connect = </DMXDecode/Image2DPixel.outputs:out>
+        float outputs:outw
+        float outputs:outx
+        float outputs:outy
+        float outputs:outz
+        float2 ui:nodegraph:node:pos = (1856.323, 340.93777)
+        int ui:nodegraph:node:stackingOrder = 707
+    }
+
+    def Shader "Combine2"
+    {
+        uniform token info:id = "ND_combine2_vector2"
+        float inputs:in1.connect = </DMXDecode/Floor.outputs:out>
+        float2 outputs:out
+        float2 ui:nodegraph:node:pos = (1384.9546, 284.62335)
+        int ui:nodegraph:node:stackingOrder = 919
+    }
+
+    def Shader "Subtract"
+    {
+        uniform token info:id = "ND_subtract_float"
+        float inputs:in1.connect = </DMXDecode/Convert_1.outputs:out>
+        float inputs:in2 = 1
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (792.68896, 271.98206)
+        int ui:nodegraph:node:stackingOrder = 912
+    }
+
+    def Scope "Group" (
+        kind = "group"
+    )
+    {
+        string ui:group:annotation = "start (1-origin) + ch (0-origin) - 1 => byte offset (0-origin)"
+        string ui:group:annotationDescription = ""
+        string[] ui:group:members = ["i:inputs:start", "i:inputs:ch", "p:Convert", "p:Subtract", "p:Add", "p:Convert_1"]
+    }
+}
+
+def NodeGraph "DMXDecodeRGB"
+{
+    reorder nameChildren = ["DMXDecodeR", "DMXDecodeG", "DMXDecodeB", "DMXDecodeG_", "Combine3", "DMXDecodeB_"]
+    asset inputs:DMX (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (99.5, 27.5)
+                int stackingOrderInSubgraph = 664
+            }
+        }
+    )
+    int inputs:start (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (90.03508, 189.17847)
+                int stackingOrderInSubgraph = 681
+            }
+        }
+    )
+    color3f outputs:RGB.connect = </DMXDecodeRGB/Combine3.outputs:out>
+    float2 ui:nodegraph:node:pos = (138.02148, -18.330051)
+    int ui:nodegraph:node:stackingOrder = 1
+    float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (883.69073, 240.62912)
+    int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 693
+
+    def Shader "Combine3"
+    {
+        uniform token info:id = "ND_combine3_color3"
+        float inputs:in1.connect = </DMXDecodeRGB/DMXDecodeR.outputs:Extract_out>
+        float inputs:in2.connect = </DMXDecodeRGB/DMXDecodeG.outputs:Extract_out>
+        float inputs:in3.connect = </DMXDecodeRGB/DMXDecodeB.outputs:Extract_out>
+        color3f outputs:out
+        float2 ui:nodegraph:node:pos = (673.36774, 260.37146)
+        int ui:nodegraph:node:stackingOrder = 692
+    }
+
+    def "DMXDecodeR" (
+        active = true
+        instanceable = true
+        references = </DMXDecode>
+    )
+    {
+        int inputs:ch
+        asset inputs:DMX.connect = </DMXDecodeRGB.inputs:DMX>
+        int inputs:start.connect = </DMXDecodeRGB.inputs:start>
+        float2 ui:nodegraph:node:pos = (334.26193, 33.695232)
+        int ui:nodegraph:node:stackingOrder = 696
+    }
+
+    def "DMXDecodeG" (
+        active = true
+        instanceable = true
+        references = </DMXDecode>
+    )
+    {
+        int inputs:ch = 1
+        asset inputs:DMX.connect = </DMXDecodeRGB.inputs:DMX>
+        int inputs:start.connect = </DMXDecodeRGB.inputs:start>
+        float2 ui:nodegraph:node:pos = (328.2346, 226.99832)
+        int ui:nodegraph:node:stackingOrder = 702
+
+        def "DMXDecode_2" (
+            active = true
+            instanceable = true
+            references = </DMXDecode>
+        )
+        {
+            int inputs:ch
+            asset inputs:DMX
+            int inputs:start
+            float2 ui:nodegraph:node:pos = (179.28645, -59.746925)
+            int ui:nodegraph:node:stackingOrder = 493
+        }
+    }
+
+    def "DMXDecodeB" (
+        active = true
+        instanceable = true
+        references = </DMXDecode>
+    )
+    {
+        int inputs:ch = 2
+        asset inputs:DMX.connect = </DMXDecodeRGB.inputs:DMX>
+        int inputs:start.connect = </DMXDecodeRGB.inputs:start>
+        float2 ui:nodegraph:node:pos = (328.6829, 392.88998)
+        int ui:nodegraph:node:stackingOrder = 706
+    }
+}
+
+def NodeGraph "DMXPitchAsModelOffset"
+{
+    reorder nameChildren = ["Range", "DMXDecode_1", "pitch_offset_1", "Multiply", "DMXDecode_1"]
+    int inputs:ch = 0 (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (-160.36954, 4.889676)
+            }
+        }
+    )
+    asset inputs:Component_DMX = @@ (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (-142.0553, 69.09337)
+                int stackingOrderInSubgraph = 1042
+            }
+        }
+    )
+    int inputs:Component_start = 0 (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (-124.296165, 143.55994)
+                int stackingOrderInSubgraph = 1042
+            }
+        }
+    )
+    float inputs:Component_tiltMax (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (19.73505, 339.50253)
+                int stackingOrderInSubgraph = 1041
+            }
+        }
+    )
+    float inputs:Component_tiltMin (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (18.18631, 265.73013)
+                int stackingOrderInSubgraph = 1045
+            }
+        }
+    )
+    float3 outputs:PitchAsModelOffset (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (399.2343, 276.7851)
+                int stackingOrderInSubgraph = 967
+            }
+        }
+    )
+    float3 outputs:PitchAsModelOffset.connect = </DMXPitchAsModelOffset/pitch_offset_1.outputs:Subtract_out>
+    float2 ui:nodegraph:node:pos = (354.07208, 352.14545)
+    int ui:nodegraph:node:stackingOrder = 1
+    string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:pitch_offset_1_Subtract_out"]
+    float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (850.4619, 271.20758)
+    int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 989
+
+    def Shader "Range"
+    {
+        uniform token info:id = "ND_range_float"
+        bool inputs:doclamp = 1
+        float inputs:gamma
+        float inputs:in.connect = </DMXPitchAsModelOffset/DMXDecode_1.outputs:Extract_out>
+        float inputs:outhigh = 90
+        float inputs:outhigh.connect = </DMXPitchAsModelOffset.inputs:Component_tiltMax>
+        float inputs:outlow.connect = </DMXPitchAsModelOffset.inputs:Component_tiltMin>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (282.25, 280)
+        int ui:nodegraph:node:stackingOrder = 961
+    }
+
+    def "pitch_offset_1" (
+        active = true
+        instanceable = true
+        references = </pitch_offset>
+    )
+    {
+        float inputs:theta.connect = </DMXPitchAsModelOffset/Multiply.outputs:out>
+        float2 ui:nodegraph:node:pos = (606.1816, 276.59305)
+        int ui:nodegraph:node:stackingOrder = 1038
+
+        over "Multiply_1"
+        {
+            float inputs:in1
+        }
+
+        over "Sin"
+        {
+            float inputs:in
+        }
+
+        over "Subtract"
+        {
+            float3 inputs:in1
+            float3 inputs:in2
+        }
+
+        over "TransformMatrix"
+        {
+            float3 inputs:in
+            matrix4d inputs:mat
+        }
+
+        over "Cos"
+        {
+            float inputs:in
+        }
+
+        over "pitch"
+        {
+            matrix4d inputs:value
+        }
+
+        over "Combine4"
+        {
+            float4 inputs:in2
+            float4 inputs:in3
+        }
+
+        over "Multiply_2"
+        {
+            matrix4d inputs:in1
+            matrix4d inputs:in2
+        }
+
+        over "Combine4_1"
+        {
+            float inputs:in2
+            float inputs:in3
+        }
+
+        over "Combine4_2"
+        {
+            float inputs:in2
+            float inputs:in3
+        }
+    }
+
+    def Shader "Multiply"
+    {
+        uniform token info:id = "ND_multiply_float"
+        float inputs:in1.connect = </DMXPitchAsModelOffset/Range.outputs:out>
+        float inputs:in2 = 0.017453292
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (411.53146, 378.83624)
+        int ui:nodegraph:node:stackingOrder = 1037
+    }
+
+    def "DMXDecode_1" (
+        active = true
+        instanceable = true
+        references = </DMXDecode>
+    )
+    {
+        int inputs:ch.connect = </DMXPitchAsModelOffset.inputs:ch>
+        asset inputs:DMX.connect = </DMXPitchAsModelOffset.inputs:Component_DMX>
+        int inputs:start.connect = </DMXPitchAsModelOffset.inputs:Component_start>
+        float2 ui:nodegraph:node:pos = (108.81905, 97.76689)
+        int ui:nodegraph:node:stackingOrder = 1040
+    }
+}
+
+def NodeGraph "DMXYawAsModelOffset"
+{
+    reorder nameChildren = ["Range", "yaw_offset_1", "Multiply", "DMXDecode_1"]
+    int inputs:ch = 0 (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (-160.36954, 4.889676)
+            }
+        }
+    )
+    asset inputs:Component_DMX = @@ (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (-164.24086, 78.998276)
+                int stackingOrderInSubgraph = 1036
+            }
+        }
+    )
+    float inputs:Component_panMax (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (-101.826164, 327.03693)
+                int stackingOrderInSubgraph = 973
+            }
+        }
+    )
+    float inputs:Component_panMin (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (-100.738304, 252.4944)
+                int stackingOrderInSubgraph = 975
+            }
+        }
+    )
+    int inputs:Component_start = 0 (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (-151.47305, 165.66252)
+                int stackingOrderInSubgraph = 1039
+            }
+        }
+    )
+    float3 outputs:YawAsModelOffset (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (243.59055, 253.65422)
+                int stackingOrderInSubgraph = 968
+            }
+        }
+    )
+    float3 outputs:YawAsModelOffset.connect = </DMXYawAsModelOffset/yaw_offset_1.outputs:Subtract_out>
+    float2 ui:nodegraph:node:pos = (374.07208, 372.14545)
+    int ui:nodegraph:node:stackingOrder = 2
+    string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:pitch_offset_1_Subtract_out"]
+    float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (781.69104, 276.90308)
+    int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 1006
+
+    def Shader "Range"
+    {
+        uniform token info:id = "ND_range_float"
+        bool inputs:doclamp = 1
+        float inputs:gamma
+        float inputs:in.connect = </DMXYawAsModelOffset/DMXDecode_1.outputs:Extract_out>
+        float inputs:inhigh
+        float inputs:inlow
+        float inputs:outhigh = 90
+        float inputs:outhigh.connect = </DMXYawAsModelOffset.inputs:Component_panMax>
+        float inputs:outlow.connect = </DMXYawAsModelOffset.inputs:Component_panMin>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (267.36148, 281.24)
+        int ui:nodegraph:node:stackingOrder = 977
+    }
+
+    def "yaw_offset_1" (
+        active = true
+        instanceable = true
+        references = </yaw_offset>
+    )
+    {
+        float inputs:theta.connect = </DMXYawAsModelOffset/Multiply.outputs:out>
+        float2 ui:nodegraph:node:pos = (526.73004, 212.47826)
+        int ui:nodegraph:node:stackingOrder = 1006
+
+        over "Multiply_1"
+        {
+            float inputs:in1
+        }
+
+        over "Sin"
+        {
+            float inputs:in
+        }
+
+        over "Subtract"
+        {
+            float3 inputs:in1
+            float3 inputs:in2
+        }
+
+        over "TransformMatrix"
+        {
+            float3 inputs:in
+            matrix4d inputs:mat
+        }
+
+        over "Cos"
+        {
+            float inputs:in
+        }
+
+        over "Combine4"
+        {
+            float4 inputs:in1
+            float4 inputs:in3
+        }
+
+        over "Multiply_2"
+        {
+            matrix4d inputs:in1
+            matrix4d inputs:in2
+        }
+
+        over "Combine4_1"
+        {
+            float inputs:in1
+            float inputs:in3
+        }
+
+        over "Combine4_2"
+        {
+            float inputs:in1
+            float inputs:in3
+        }
+
+        over "yaw"
+        {
+            matrix4d inputs:value
+        }
+    }
+
+    def Shader "Multiply"
+    {
+        uniform token info:id = "ND_multiply_float"
+        float inputs:in1.connect = </DMXYawAsModelOffset/Range.outputs:out>
+        float inputs:in2 = 0.017453292
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (411.66156, 370.15686)
+        int ui:nodegraph:node:stackingOrder = 1034
+    }
+
+    def "DMXDecode_1" (
+        active = true
+        instanceable = true
+        references = </DMXDecode>
+    )
+    {
+        int inputs:ch.connect = </DMXYawAsModelOffset.inputs:ch>
+        asset inputs:DMX.connect = </DMXYawAsModelOffset.inputs:Component_DMX>
+        int inputs:start.connect = </DMXYawAsModelOffset.inputs:Component_start>
+        float2 ui:nodegraph:node:pos = (90.30899, 118.018326)
+        int ui:nodegraph:node:stackingOrder = 1036
+    }
+}
+
+def NodeGraph "pitch_offset"
+{
+    float inputs:theta = 45 (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (62.75, 174.375)
+            }
+        }
+    )
+    float3 outputs:Subtract_out.connect = </pitch_offset/Subtract.outputs:out>
+    float2 ui:nodegraph:node:pos = (114.43097, 423.20648)
+    int ui:nodegraph:node:stackingOrder = 747
+    float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (1891.25, 189.375)
+
+    def Shader "Multiply_1"
+    {
+        uniform token info:id = "ND_multiply_float"
+        float inputs:in1.connect = </pitch_offset/Sin.outputs:out>
+        float inputs:in2 = -1
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (443.25, 256)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Sin"
+    {
+        uniform token info:id = "ND_sin_float"
+        float inputs:in.connect = </pitch_offset.inputs:theta>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (244.25, 193)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Subtract"
+    {
+        uniform token info:id = "ND_subtract_vector3"
+        float3 inputs:in1.connect = </pitch_offset/TransformMatrix.outputs:out>
+        float3 inputs:in2.connect = </pitch_offset/Position.outputs:out>
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (1706.25, 189.375)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "TransformMatrix"
+    {
+        uniform token info:id = "ND_transformmatrix_vector3M4"
+        float3 inputs:in.connect = </pitch_offset/Position.outputs:out>
+        matrix4d inputs:mat.connect = </pitch_offset/Multiply_2.outputs:out>
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (1524.75, 238.125)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "identity"
+    {
+        uniform token info:id = "ND_constant_matrix44"
+        matrix4d inputs:value = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+        matrix4d outputs:out
+        float2 ui:nodegraph:node:pos = (1090.25, 278.75)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Cos"
+    {
+        uniform token info:id = "ND_cos_float"
+        float inputs:in.connect = </pitch_offset.inputs:theta>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (244.25, 91)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Position"
+    {
+        uniform token info:id = "ND_position_vector3"
+        string inputs:space = "model"
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (1303.25, 161.625)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "pitch"
+    {
+        uniform token info:id = "ND_constant_matrix44"
+        matrix4d inputs:value = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+        matrix4d inputs:value.connect = </pitch_offset/Combine4.outputs:out>
+        matrix4d outputs:out
+        float2 ui:nodegraph:node:pos = (1090.25, 89)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Combine4"
+    {
+        uniform token info:id = "ND_realitykit_combine4_matrix44"
+        float4 inputs:in1
+        float4 inputs:in2.connect = </pitch_offset/Combine4_1.outputs:out>
+        float4 inputs:in3.connect = </pitch_offset/Combine4_2.outputs:out>
+        float4 inputs:in4
+        matrix4d outputs:out
+        float2 ui:nodegraph:node:pos = (873.5, 89)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Multiply_2"
+    {
+        uniform token info:id = "ND_multiply_matrix44"
+        matrix4d inputs:in1.connect = </pitch_offset/pitch.outputs:out>
+        matrix4d inputs:in2.connect = </pitch_offset/identity.outputs:out>
+        matrix4d outputs:out
+        float2 ui:nodegraph:node:pos = (1303.25, 260.625)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Combine4_1"
+    {
+        uniform token info:id = "ND_combine4_vector4"
+        float inputs:in1
+        float inputs:in2.connect = </pitch_offset/Cos.outputs:out>
+        float inputs:in3.connect = </pitch_offset/Multiply_1.outputs:out>
+        float inputs:in4
+        float4 outputs:out
+        float2 ui:nodegraph:node:pos = (662.25, 36)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Combine4_2"
+    {
+        uniform token info:id = "ND_combine4_vector4"
+        float inputs:in1
+        float inputs:in2.connect = </pitch_offset/Sin.outputs:out>
+        float inputs:in3.connect = </pitch_offset/Cos.outputs:out>
+        float inputs:in4
+        float4 outputs:out
+        float2 ui:nodegraph:node:pos = (443.25, 142)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+}
+
+def NodeGraph "yaw_offset"
+{
+    float inputs:theta = 45 (
+        customData = {
+            dictionary realitykit = {
+                float2 positionInSubgraph = (62.75, 174.375)
+            }
+        }
+    )
+    float3 outputs:Subtract_out.connect = </yaw_offset/Subtract.outputs:out>
+    float2 ui:nodegraph:node:pos = (134.43097, 443.20648)
+    int ui:nodegraph:node:stackingOrder = 748
+    float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (1891.25, 189.375)
+
+    def Shader "Multiply_1"
+    {
+        uniform token info:id = "ND_multiply_float"
+        float inputs:in1.connect = </yaw_offset/Sin.outputs:out>
+        float inputs:in2 = -1
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (443.25, 256)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Sin"
+    {
+        uniform token info:id = "ND_sin_float"
+        float inputs:in.connect = </yaw_offset.inputs:theta>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (244.25, 193)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Subtract"
+    {
+        uniform token info:id = "ND_subtract_vector3"
+        float3 inputs:in1.connect = </yaw_offset/TransformMatrix.outputs:out>
+        float3 inputs:in2.connect = </yaw_offset/Position.outputs:out>
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (1706.25, 189.375)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "TransformMatrix"
+    {
+        uniform token info:id = "ND_transformmatrix_vector3M4"
+        float3 inputs:in.connect = </yaw_offset/Position.outputs:out>
+        matrix4d inputs:mat.connect = </yaw_offset/Multiply_2.outputs:out>
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (1524.75, 238.125)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "identity"
+    {
+        uniform token info:id = "ND_constant_matrix44"
+        matrix4d inputs:value = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+        matrix4d outputs:out
+        float2 ui:nodegraph:node:pos = (1090.25, 278.75)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Cos"
+    {
+        uniform token info:id = "ND_cos_float"
+        float inputs:in.connect = </yaw_offset.inputs:theta>
+        float outputs:out
+        float2 ui:nodegraph:node:pos = (244.25, 91)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Position"
+    {
+        uniform token info:id = "ND_position_vector3"
+        string inputs:space = "model"
+        float3 outputs:out
+        float2 ui:nodegraph:node:pos = (1303.25, 161.625)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Combine4"
+    {
+        uniform token info:id = "ND_realitykit_combine4_matrix44"
+        float4 inputs:in1.connect = </yaw_offset/Combine4_1.outputs:out>
+        float4 inputs:in2.connect = None
+        float4 inputs:in3.connect = </yaw_offset/Combine4_2.outputs:out>
+        float4 inputs:in4
+        matrix4d outputs:out
+        float2 ui:nodegraph:node:pos = (873.5, 89)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Multiply_2"
+    {
+        uniform token info:id = "ND_multiply_matrix44"
+        matrix4d inputs:in1.connect = </yaw_offset/yaw.outputs:out>
+        matrix4d inputs:in2.connect = </yaw_offset/identity.outputs:out>
+        matrix4d outputs:out
+        float2 ui:nodegraph:node:pos = (1303.25, 260.625)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Combine4_1"
+    {
+        uniform token info:id = "ND_combine4_vector4"
+        float inputs:in1.connect = </yaw_offset/Cos.outputs:out>
+        float inputs:in2.connect = None
+        float inputs:in3.connect = </yaw_offset/Sin.outputs:out>
+        float inputs:in4.connect = None
+        float4 outputs:out
+        float2 ui:nodegraph:node:pos = (662.25, 36)
+        int ui:nodegraph:node:stackingOrder = 1016
+    }
+
+    def Shader "Combine4_2"
+    {
+        uniform token info:id = "ND_combine4_vector4"
+        float inputs:in1.connect = </yaw_offset/Multiply_1.outputs:out>
+        float inputs:in2.connect = None
+        float inputs:in3.connect = </yaw_offset/Cos.outputs:out>
+        float inputs:in4
+        float4 outputs:out
+        float2 ui:nodegraph:node:pos = (661.3982, 136.71925)
+        int ui:nodegraph:node:stackingOrder = 1022
+    }
+
+    def Shader "yaw"
+    {
+        uniform token info:id = "ND_constant_matrix44"
+        matrix4d inputs:value = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+        matrix4d inputs:value.connect = </yaw_offset/Combine4.outputs:out>
+        matrix4d outputs:out
+        float2 ui:nodegraph:node:pos = (1090.25, 89)
+        int ui:nodegraph:node:stackingOrder = 1023
+    }
+}
+
