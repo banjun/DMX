@@ -1,0 +1,11 @@
+{
+  "pathsToIds" : {
+    "\/RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Scene.usda" : "9C79E0D1-D390-41E3-A184-67013B7D1164",
+    "RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Scene.usda" : "BF6F30A1-0DD8-4F93-B7E7-023BB5932977"
+  },
+  "projectID" : -6685514373035721643,
+  "uuidToIntID" : {
+    "9C79E0D1-D390-41E3-A184-67013B7D1164" : 1946877295031141252,
+    "BF6F30A1-0DD8-4F93-B7E7-023BB5932977" : -3442114619877281568
+  }
+}
