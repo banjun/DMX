@@ -7,7 +7,7 @@ def Xform "Root" (
     active = true
 )
 {
-    reorder nameChildren = ["DMXDecode", "DMXDecodeRGB", "pitch_offset", "yaw_offset", "DMXPitchAsModelOffset", "DMXYawAsModelOffset", "DMXMaterial", "Cube", "MovieStudioSpotlight"]
+    reorder nameChildren = ["DMXDecode", "DMXDecodeRGB", "pitch_offset", "yaw_offset", "DMXPitchAsModelOffset", "DMXYawAsModelOffset", "DMXVisualizer", "DMXMaterial", "Cube", "MovieStudioSpotlight"]
     def NodeGraph "DMXDecode"
     {
         int inputs:ch (
@@ -26,11 +26,11 @@ def Xform "Root" (
                 }
             }
         )
-        int inputs:start (
+        int inputs:start = 1 (
             customData = {
                 dictionary realitykit = {
                     float2 positionInSubgraph = (488.75836, 264.19962)
-                    int stackingOrderInSubgraph = 912
+                    int stackingOrderInSubgraph = 920
                 }
             }
         )
@@ -1181,6 +1181,297 @@ def Xform "Root" (
             float outputs:out
             float2 ui:nodegraph:node:pos = (411.66156, 370.15686)
             int ui:nodegraph:node:stackingOrder = 1034
+        }
+    }
+
+    def Xform "DMXVisualizer" (
+        active = true
+    )
+    {
+        reorder nameChildren = ["DMXBar", "Cube_1", "Cube_2", "Cube_3", "RealityKitContent_DMXReceiverComponent"]
+        float3 xformOp:translate = (0, 0, 20)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Material "DMXBar"
+        {
+            reorder nameChildren = ["DefaultSurfaceShader", "UnlitSurface", "GeometryModifier", "Position", "Multiply", "Subtract", "DMXDecode_1", "Combine3", "Multiply_1", "Separate3", "IfGreater"]
+            int inputs:ch = 0 (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-1384.0045, 405.78058)
+                        int stackingOrderInSubgraph = 649
+                    }
+                }
+            )
+            asset inputs:Component_DMX = @@ (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-1443.0164, 523.25696)
+                        int stackingOrderInSubgraph = 650
+                    }
+                }
+            )
+            token outputs:mtlx:surface.connect = </Root/DMXVisualizer/DMXBar/UnlitSurface.outputs:out>
+            token outputs:realitykit:vertex.connect = </Root/DMXVisualizer/DMXBar/GeometryModifier.outputs:out>
+            token outputs:surface.connect = </Root/DMXVisualizer/DMXBar/DefaultSurfaceShader.outputs:surface>
+            float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (0, 110.5)
+
+            def Shader "DefaultSurfaceShader" (
+                active = false
+            )
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 1, 1)
+                float inputs:roughness = 0.75
+                token outputs:surface
+            }
+
+            def Shader "UnlitSurface"
+            {
+                uniform token info:id = "ND_realitykit_unlit_surfaceshader"
+                token outputs:out
+                float2 ui:nodegraph:node:pos = (-309.76172, 109.296875)
+                int ui:nodegraph:node:stackingOrder = 6
+            }
+
+            def Shader "GeometryModifier"
+            {
+                uniform token info:id = "ND_realitykit_geometrymodifier_2_0_vertexshader"
+                float3 inputs:bitangent
+                color4f inputs:color
+                float3 inputs:modelPositionOffset.connect = </Root/DMXVisualizer/DMXBar/IfGreater.outputs:out>
+                float3 inputs:normal
+                token outputs:out
+                float2 ui:nodegraph:node:pos = (-256.67053, 435.54553)
+                int ui:nodegraph:node:stackingOrder = 580
+            }
+
+            def Shader "Position"
+            {
+                uniform token info:id = "ND_position_vector3"
+                string inputs:space = "model"
+                float3 outputs:out
+                float2 ui:nodegraph:node:pos = (-1117.4445, 338.69476)
+                int ui:nodegraph:node:stackingOrder = 635
+            }
+
+            def Shader "Multiply"
+            {
+                uniform token info:id = "ND_multiply_vector3"
+                float3 inputs:in1.connect = </Root/DMXVisualizer/DMXBar/Position.outputs:out>
+                float3 inputs:in2 = (1, 10, 1)
+                float3 inputs:in2.connect = </Root/DMXVisualizer/DMXBar/Combine3.outputs:out>
+                float3 outputs:out
+                float2 ui:nodegraph:node:pos = (-835.7418, 400.655)
+                int ui:nodegraph:node:stackingOrder = 644
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:in2"]
+            }
+
+            def Shader "Subtract"
+            {
+                uniform token info:id = "ND_subtract_vector3"
+                float3 inputs:in1.connect = </Root/DMXVisualizer/DMXBar/Multiply.outputs:out>
+                float3 inputs:in2.connect = </Root/DMXVisualizer/DMXBar/Position.outputs:out>
+                float3 outputs:out
+                float2 ui:nodegraph:node:pos = (-738.62213, 364.43594)
+                int ui:nodegraph:node:stackingOrder = 642
+            }
+
+            def "DMXDecode_1" (
+                active = true
+                instanceable = true
+                references = </Root/DMXDecode>
+            )
+            {
+                int inputs:ch.connect = </Root/DMXVisualizer/DMXBar.inputs:ch>
+                asset inputs:DMX.connect = </Root/DMXVisualizer/DMXBar.inputs:Component_DMX>
+                int inputs:start = 1 (
+                    customData = {
+                        dictionary realitykit = {
+                            float2 positionInSubgraph = (488.75836, 264.19962)
+                            int stackingOrderInSubgraph = 912
+                        }
+                    }
+                )
+                float2 ui:nodegraph:node:pos = (-1232.2482, 529.4101)
+                int ui:nodegraph:node:stackingOrder = 652
+            }
+
+            def Shader "Combine3"
+            {
+                uniform token info:id = "ND_combine3_vector3"
+                float inputs:in1 = 1
+                float inputs:in2 = 1
+                float inputs:in2.connect = </Root/DMXVisualizer/DMXBar/Multiply_1.outputs:out>
+                float inputs:in3 = 1
+                float3 outputs:out
+                float2 ui:nodegraph:node:pos = (-952.27344, 434.19183)
+                int ui:nodegraph:node:stackingOrder = 638
+            }
+
+            def Shader "Multiply_1"
+            {
+                uniform token info:id = "ND_multiply_float"
+                float inputs:in1.connect = </Root/DMXVisualizer/DMXBar/DMXDecode_1.outputs:Extract_out>
+                float inputs:in2 = 50
+                float outputs:out
+                float2 ui:nodegraph:node:pos = (-1089.5498, 549.9689)
+                int ui:nodegraph:node:stackingOrder = 646
+            }
+
+            def Shader "Separate3"
+            {
+                uniform token info:id = "ND_separate3_vector3"
+                float3 inputs:in.connect = </Root/DMXVisualizer/DMXBar/Position.outputs:out>
+                float outputs:outx
+                float outputs:outy
+                float outputs:outz
+                float2 ui:nodegraph:node:pos = (-944.72516, 293.89227)
+                int ui:nodegraph:node:stackingOrder = 635
+            }
+
+            def Shader "IfGreater"
+            {
+                uniform token info:id = "ND_ifgreater_vector3"
+                float3 inputs:in1.connect = </Root/DMXVisualizer/DMXBar/Subtract.outputs:out>
+                prepend float inputs:value1.connect = </Root/DMXVisualizer/DMXBar/Separate3.outputs:outy>
+                float3 outputs:out
+                float2 ui:nodegraph:node:pos = (-583.46204, 260.6631)
+                int ui:nodegraph:node:stackingOrder = 635
+            }
+        }
+
+        def RealityKitCustomComponent "RealityKitContent_DMXReceiverComponent"
+        {
+            uniform token info:id = "RealityKitContent.DMXReceiverComponent"
+        }
+
+        def Cube "Cube_2" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Root/DMXVisualizer/Cube_2/DMXBar_1> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            double size = 1
+            float2 ui:nodegraph:node:pos = (-619.75543, 475.23203)
+            int ui:nodegraph:node:stackingOrder = 1
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-14, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def "DMXBar_1" (
+                active = true
+                instanceable = true
+                references = </Root/DMXVisualizer/DMXBar>
+            )
+            {
+                int inputs:ch = 1
+            }
+        }
+
+        def Cube "Cube_1" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Root/DMXVisualizer/Cube_1/DMXBar_1> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            double size = 1
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-15, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def "DMXBar_1" (
+                active = true
+                instanceable = true
+                references = </Root/DMXVisualizer/DMXBar>
+            )
+            {
+                int inputs:ch = 0
+            }
+        }
+
+        def Cube "Cube_3" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Root/DMXVisualizer/Cube_3/DMXBar_2> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            double size = 1
+            float2 ui:nodegraph:node:pos = (-599.75543, 495.23203)
+            int ui:nodegraph:node:stackingOrder = 2
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-13, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def "DMXBar_2" (
+                active = true
+                instanceable = true
+                references = </Root/DMXVisualizer/DMXBar>
+            )
+            {
+                int inputs:ch = 2
+            }
+        }
+
+        def Cube "Cube_4" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Root/DMXVisualizer/Cube_4/DMXBar_1> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            double size = 1
+            float2 ui:nodegraph:node:pos = (-579.75543, 515.23206)
+            int ui:nodegraph:node:stackingOrder = 3
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-12, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def "DMXBar_1" (
+                active = true
+                instanceable = true
+                references = </Root/DMXVisualizer/DMXBar>
+            )
+            {
+                int inputs:ch = 3
+            }
+        }
+
+        def Cube "Cube_5" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Root/DMXVisualizer/Cube_5/DMXBar_2> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            double size = 1
+            float2 ui:nodegraph:node:pos = (-559.75543, 535.23206)
+            int ui:nodegraph:node:stackingOrder = 4
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-11, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def "DMXBar_2" (
+                active = true
+                instanceable = true
+                references = </Root/DMXVisualizer/DMXBar>
+            )
+            {
+                int inputs:ch = 4
+            }
         }
     }
 }

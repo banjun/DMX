@@ -63,7 +63,7 @@ struct DMXTextureUpdateSystem: System {
                         "panMin": .float(c.panMin),
                         "panMax": .float(c.panMax),
                         "tiltMin": .float(c.tiltMin),
-                        "tileMax": .float(c.tileMax),
+                        "tileMax": .float(c.tiltMax),
                     ]
                     params.forEach { k, v in
                         let k = "Component_\(k)"

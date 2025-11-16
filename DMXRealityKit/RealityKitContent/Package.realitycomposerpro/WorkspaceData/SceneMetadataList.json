@@ -4,7 +4,8 @@
       [
         "9C79E0D1-D390-41E3-A184-67013B7D1164",
         "Root",
-        "Sphere"
+        "Sphere",
+        "DMXMaterial"
       ],
       {
         "isExpanded" : true,
@@ -13,8 +14,7 @@
       [
         "9C79E0D1-D390-41E3-A184-67013B7D1164",
         "Root",
-        "Sphere",
-        "DMXMaterial"
+        "Sphere"
       ],
       {
         "isExpanded" : true,
@@ -35,47 +35,6 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "MovieStudioSpotlight",
-        "geom",
-        "realistic",
-        "geo",
-        "lod0"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "DMXDecodeRGB"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "yaw_offset"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "MovieStudioSpotlight",
-        "geom"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
         "DMXYawAsModelOffset"
       ],
       {
@@ -85,7 +44,7 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "MovieStudioSpotlight"
+        "DMXPitchAsModelOffset"
       ],
       {
         "isExpanded" : true,
@@ -103,33 +62,8 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "MovieStudioSpotlight",
-        "geom",
-        "realistic",
-        "materials",
-        "spotlight_studio_realistic_01_mat_sg"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "MovieStudioSpotlight",
-        "geom",
-        "realistic",
-        "geo",
-        "lod0",
-        "spotlight_studio_base_realistic_lod0"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root"
+        "DMXVisualizer",
+        "Cube_4"
       ],
       {
         "isExpanded" : true,
@@ -148,7 +82,8 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "Cube"
+        "DMXVisualizer",
+        "Cube_5"
       ],
       {
         "isExpanded" : true,
@@ -157,9 +92,24 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "MovieStudioSpotlight",
-        "geom",
-        "realistic"
+        "DMXVisualizer"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "DMXDecodeRGB"
       ],
       {
         "isExpanded" : true,
@@ -177,11 +127,8 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "MovieStudioSpotlight",
-        "geom",
-        "realistic",
-        "materials",
-        "spotlight_studio_realistic_glass_01_matsg"
+        "DMXVisualizer",
+        "Cube_1"
       ],
       {
         "isExpanded" : true,
@@ -190,10 +137,8 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "MovieStudioSpotlight",
-        "geom",
-        "realistic",
-        "materials"
+        "DMXVisualizer",
+        "Cube_2"
       ],
       {
         "isExpanded" : true,
@@ -202,7 +147,8 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "DMXPitchAsModelOffset"
+        "DMXVisualizer",
+        "DMXBar"
       ],
       {
         "isExpanded" : true,
@@ -211,10 +157,26 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "MovieStudioSpotlight",
-        "geom",
-        "realistic",
-        "geo"
+        "DMXVisualizer",
+        "Cube_3"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "yaw_offset"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "Cube"
       ],
       {
         "isExpanded" : true,
