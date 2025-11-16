@@ -13,8 +13,8 @@ def Xform "Root" (
         int inputs:ch (
             customData = {
                 dictionary realitykit = {
-                    float2 positionInSubgraph = (655.5305, 352.925)
-                    int stackingOrderInSubgraph = 831
+                    float2 positionInSubgraph = (586.44226, 360.74844)
+                    int stackingOrderInSubgraph = 912
                 }
             }
         )
@@ -29,8 +29,8 @@ def Xform "Root" (
         int inputs:start (
             customData = {
                 dictionary realitykit = {
-                    float2 positionInSubgraph = (661.8268, 249.941)
-                    int stackingOrderInSubgraph = 829
+                    float2 positionInSubgraph = (488.75836, 264.19962)
+                    int stackingOrderInSubgraph = 912
                 }
             }
         )
@@ -45,8 +45,8 @@ def Xform "Root" (
             uniform token info:id = "ND_floor_float"
             float inputs:in.connect = </Root/DMXDecode/Divide.outputs:out>
             float outputs:out
-            float2 ui:nodegraph:node:pos = (1243.5636, 272.13812)
-            int ui:nodegraph:node:stackingOrder = 821
+            float2 ui:nodegraph:node:pos = (1203.3702, 273.23947)
+            int ui:nodegraph:node:stackingOrder = 917
         }
 
         def Shader "Modulo"
@@ -84,8 +84,8 @@ def Xform "Root" (
             uniform token info:id = "ND_convert_integer_float"
             int inputs:in.connect = </Root/DMXDecode.inputs:ch>
             float outputs:out
-            float2 ui:nodegraph:node:pos = (832.0295, 349.92453)
-            int ui:nodegraph:node:stackingOrder = 825
+            float2 ui:nodegraph:node:pos = (762.9412, 357.748)
+            int ui:nodegraph:node:stackingOrder = 912
         }
 
         def Shader "Convert_1"
@@ -93,8 +93,8 @@ def Xform "Root" (
             uniform token info:id = "ND_convert_integer_float"
             int inputs:in.connect = </Root/DMXDecode.inputs:start>
             float outputs:out
-            float2 ui:nodegraph:node:pos = (829.2, 256.71146)
-            int ui:nodegraph:node:stackingOrder = 827
+            float2 ui:nodegraph:node:pos = (649.3207, 264.0652)
+            int ui:nodegraph:node:stackingOrder = 912
         }
 
         def Shader "Divide"
@@ -110,11 +110,11 @@ def Xform "Root" (
         def Shader "Add"
         {
             uniform token info:id = "ND_add_float"
-            float inputs:in1.connect = </Root/DMXDecode/Convert_1.outputs:out>
+            float inputs:in1.connect = </Root/DMXDecode/Subtract.outputs:out>
             float inputs:in2.connect = </Root/DMXDecode/Convert.outputs:out>
             float outputs:out
-            float2 ui:nodegraph:node:pos = (983.73627, 325.15295)
-            int ui:nodegraph:node:stackingOrder = 823
+            float2 ui:nodegraph:node:pos = (914.648, 332.9764)
+            int ui:nodegraph:node:stackingOrder = 912
         }
 
         def Shader "Switch"
@@ -152,8 +152,27 @@ def Xform "Root" (
             uniform token info:id = "ND_combine2_vector2"
             float inputs:in1.connect = </Root/DMXDecode/Floor.outputs:out>
             float2 outputs:out
-            float2 ui:nodegraph:node:pos = (1402.2979, 276.26187)
-            int ui:nodegraph:node:stackingOrder = 762
+            float2 ui:nodegraph:node:pos = (1384.9546, 284.62335)
+            int ui:nodegraph:node:stackingOrder = 919
+        }
+
+        def Shader "Subtract"
+        {
+            uniform token info:id = "ND_subtract_float"
+            float inputs:in1.connect = </Root/DMXDecode/Convert_1.outputs:out>
+            float inputs:in2 = 1
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (792.68896, 271.98206)
+            int ui:nodegraph:node:stackingOrder = 912
+        }
+
+        def Scope "Group" (
+            kind = "group"
+        )
+        {
+            string ui:group:annotation = "start (1-origin) + ch (0-origin) - 1 => byte offset (0-origin)"
+            string ui:group:annotationDescription = ""
+            string[] ui:group:members = ["i:inputs:start", "i:inputs:ch", "p:Convert", "p:Subtract", "p:Add", "p:Convert_1"]
         }
     }
 
@@ -246,6 +265,12 @@ def Xform "Root" (
         double size = 20
         float3 xformOp:translate = (16.37256, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitCustomComponent "RealityKitContent_DMXReceiverComponent"
+        {
+            uniform token info:id = "RealityKitContent.DMXReceiverComponent"
+            int start = 1
+        }
     }
 
     def Material "DMXMaterial"
@@ -254,35 +279,19 @@ def Xform "Root" (
         token cullMode = "back" (
             allowedTokens = ["unspecified", "none", "front", "back"]
         )
-        float inputs:angle_high = 0 (
+        asset inputs:Component_DMX = @@ (
             customData = {
                 dictionary realitykit = {
-                    float2 positionInSubgraph = (86.296875, 491.9414)
-                    int stackingOrderInSubgraph = 961
+                    float2 positionInSubgraph = (-116.7578, -196.21887)
+                    int stackingOrderInSubgraph = 755
                 }
             }
         )
-        float inputs:angle_low = 0 (
-            customData = {
-                dictionary realitykit = {
-                    float2 positionInSubgraph = (61.511707, 416.58417)
-                    int stackingOrderInSubgraph = 961
-                }
-            }
-        )
-        asset inputs:DMX = @@ (
-            customData = {
-                dictionary realitykit = {
-                    float2 positionInSubgraph = (-136.94173, -194.9117)
-                    int stackingOrderInSubgraph = 644
-                }
-            }
-        )
-        int inputs:start = 0 (
+        int inputs:Component_start = 0 (
             customData = {
                 dictionary realitykit = {
                     float2 positionInSubgraph = (-81.93652, -80.19818)
-                    int stackingOrderInSubgraph = 646
+                    int stackingOrderInSubgraph = 753
                 }
             }
         )
@@ -308,8 +317,8 @@ def Xform "Root" (
             references = </Root/DMXDecodeRGB>
         )
         {
-            asset inputs:DMX.connect = </Root/DMXMaterial.inputs:DMX>
-            int inputs:start.connect = </Root/DMXMaterial.inputs:start>
+            asset inputs:DMX.connect = </Root/DMXMaterial.inputs:Component_DMX>
+            int inputs:start.connect = </Root/DMXMaterial.inputs:Component_start>
             float2 ui:nodegraph:node:pos = (165.14816, -176.5315)
             int ui:nodegraph:node:stackingOrder = 752
         }
@@ -507,11 +516,35 @@ def Xform "Root" (
                     over "spotlight_studio_realistic_01_mat_sg"
                     {
                         reorder nameChildren = ["spotlight_studio_realistic_01_mat", "file62", "place2dTexture12", "file63", "place2dTexture13", "file64", "place2dTexture14", "file65", "place2dTexture15", "file66", "place2dTexture16", "spotlight_studio_realistic_01_mat_mtlx", "file66_mtlx", "Lookup_st", "file66_mtlx_scale", "file66_mtlx_offset", "file64_mtlx", "file62_mtlx", "file63_mtlx", "file65_mtlx", "GeometryModifier", "DMXPitchAsModelOffset_1", "DMXYawAsModelOffset_1"]
-                        asset inputs:DMX = @@ (
+                        asset inputs:Component_DMX = @@ (
                             customData = {
                                 dictionary realitykit = {
-                                    float2 positionInSubgraph = (1133.0188, 867.49084)
-                                    int stackingOrderInSubgraph = 795
+                                    float2 positionInSubgraph = (1083.8783, 867.6281)
+                                    int stackingOrderInSubgraph = 816
+                                }
+                            }
+                        )
+                        float inputs:Component_panMax = 0 (
+                            customData = {
+                                dictionary realitykit = {
+                                    float2 positionInSubgraph = (1069.1393, 953.4276)
+                                    int stackingOrderInSubgraph = 819
+                                }
+                            }
+                        )
+                        float inputs:Component_panMin = 0 (
+                            customData = {
+                                dictionary realitykit = {
+                                    float2 positionInSubgraph = (1072.2905, 1021.76666)
+                                    int stackingOrderInSubgraph = 817
+                                }
+                            }
+                        )
+                        int inputs:Component_start = 0 (
+                            customData = {
+                                dictionary realitykit = {
+                                    float2 positionInSubgraph = (1075.102, 1091.4055)
+                                    int stackingOrderInSubgraph = 815
                                 }
                             }
                         )
@@ -615,21 +648,7 @@ def Xform "Root" (
                             float4 inputs:uv7
                             token outputs:out
                             float2 ui:nodegraph:node:pos = (1664.9209, 843.92596)
-                            int ui:nodegraph:node:stackingOrder = 786
-                        }
-
-                        def "DMXPitchAsModelOffset_1" (
-                            active = true
-                            instanceable = true
-                            references = </Root/DMXPitchAsModelOffset>
-                        )
-                        {
-                            float inputs:angle_high = 0.7
-                            float inputs:angle_low = -0.7
-                            int inputs:ch = 4
-                            asset inputs:DMX.connect = </Root/MovieStudioSpotlight/geom/realistic/materials/spotlight_studio_realistic_01_mat_sg.inputs:DMX>
-                            float2 ui:nodegraph:node:pos = (1336.7134, 849.7824)
-                            int ui:nodegraph:node:stackingOrder = 797
+                            int ui:nodegraph:node:stackingOrder = 823
                         }
 
                         def "DMXYawAsModelOffset_1" (
@@ -638,17 +657,44 @@ def Xform "Root" (
                             references = </Root/DMXYawAsModelOffset>
                         )
                         {
-                            float inputs:angle_high = 0.7
-                            float inputs:angle_low = -0.7
-                            int inputs:ch = 4
-                            asset inputs:DMX.connect = </Root/MovieStudioSpotlight/geom/realistic/materials/spotlight_studio_realistic_01_mat_sg.inputs:DMX>
-                            int inputs:start
-                            float2 ui:nodegraph:node:pos = (1340.0143, 1060.615)
-                            int ui:nodegraph:node:stackingOrder = 806
+                            int inputs:ch = 3
+                            asset inputs:Component_DMX.connect = </Root/MovieStudioSpotlight/geom/realistic/materials/spotlight_studio_realistic_01_mat_sg.inputs:Component_DMX>
+                            float inputs:Component_panMax (
+                                customData = {
+                                    dictionary realitykit = {
+                                        float2 positionInSubgraph = (-46.38793, 326.2668)
+                                        int stackingOrderInSubgraph = 990
+                                    }
+                                }
+                            )
+                            float inputs:Component_panMax.connect = </Root/MovieStudioSpotlight/geom/realistic/materials/spotlight_studio_realistic_01_mat_sg.inputs:Component_panMax>
+                            float inputs:Component_panMin (
+                                customData = {
+                                    dictionary realitykit = {
+                                        float2 positionInSubgraph = (-47.936672, 252.4944)
+                                        int stackingOrderInSubgraph = 990
+                                    }
+                                }
+                            )
+                            float inputs:Component_panMin.connect = </Root/MovieStudioSpotlight/geom/realistic/materials/spotlight_studio_realistic_01_mat_sg.inputs:Component_panMin>
+                            int inputs:Component_start.connect = </Root/MovieStudioSpotlight/geom/realistic/materials/spotlight_studio_realistic_01_mat_sg.inputs:Component_start>
+                            float2 ui:nodegraph:node:pos = (1326.219, 963.6831)
+                            int ui:nodegraph:node:stackingOrder = 826
                         }
                     }
                 }
             }
+        }
+
+        def RealityKitCustomComponent "RealityKitContent_LightMovingHeadComponent"
+        {
+            uniform token info:id = "RealityKitContent.LightMovingHeadComponent"
+        }
+
+        def RealityKitCustomComponent "RealityKitContent_DMXReceiverComponent"
+        {
+            uniform token info:id = "RealityKitContent.DMXReceiverComponent"
+            int start = 1
         }
     }
 
@@ -791,22 +837,6 @@ def Xform "Root" (
 
     def NodeGraph "DMXPitchAsModelOffset"
     {
-        float inputs:angle_high (
-            customData = {
-                dictionary realitykit = {
-                    float2 positionInSubgraph = (9.485388, 328.23773)
-                    int stackingOrderInSubgraph = 964
-                }
-            }
-        )
-        float inputs:angle_low (
-            customData = {
-                dictionary realitykit = {
-                    float2 positionInSubgraph = (5.5393414, 217.61816)
-                    int stackingOrderInSubgraph = 963
-                }
-            }
-        )
         int inputs:ch = 0 (
             customData = {
                 dictionary realitykit = {
@@ -814,17 +844,35 @@ def Xform "Root" (
                 }
             }
         )
-        asset inputs:DMX = @@ (
+        asset inputs:Component_DMX = @@ (
             customData = {
                 dictionary realitykit = {
-                    float2 positionInSubgraph = (-100.397064, 75.57934)
+                    float2 positionInSubgraph = (-130.02171, 75.34663)
+                    int stackingOrderInSubgraph = 1043
                 }
             }
         )
-        int inputs:start = 0 (
+        int inputs:Component_start = 0 (
             customData = {
                 dictionary realitykit = {
-                    float2 positionInSubgraph = (-137.16066, 132.33376)
+                    float2 positionInSubgraph = (-124.296165, 143.55994)
+                    int stackingOrderInSubgraph = 1041
+                }
+            }
+        )
+        float inputs:Component_tiltMax (
+            customData = {
+                dictionary realitykit = {
+                    float2 positionInSubgraph = (19.73505, 339.50253)
+                    int stackingOrderInSubgraph = 986
+                }
+            }
+        )
+        float inputs:Component_tiltMin (
+            customData = {
+                dictionary realitykit = {
+                    float2 positionInSubgraph = (18.18631, 265.73013)
+                    int stackingOrderInSubgraph = 986
                 }
             }
         )
@@ -839,8 +887,8 @@ def Xform "Root" (
         float3 outputs:PitchAsModelOffset.connect = </Root/DMXPitchAsModelOffset/pitch_offset_1.outputs:Subtract_out>
         float2 ui:nodegraph:node:pos = (334.07208, 332.14545)
         string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:pitch_offset_1_Subtract_out"]
-        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (715.78033, 274.61453)
-        int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 964
+        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (850.4619, 271.20758)
+        int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 989
 
         def Shader "Range"
         {
@@ -849,8 +897,8 @@ def Xform "Root" (
             float inputs:gamma
             float inputs:in.connect = </Root/DMXPitchAsModelOffset/DMXDecode_1.outputs:Extract_out>
             float inputs:outhigh = 90
-            float inputs:outhigh.connect = </Root/DMXPitchAsModelOffset.inputs:angle_high>
-            float inputs:outlow.connect = </Root/DMXPitchAsModelOffset.inputs:angle_low>
+            float inputs:outhigh.connect = </Root/DMXPitchAsModelOffset.inputs:Component_tiltMax>
+            float inputs:outlow.connect = </Root/DMXPitchAsModelOffset.inputs:Component_tiltMin>
             float outputs:out
             float2 ui:nodegraph:node:pos = (282.25, 280)
             int ui:nodegraph:node:stackingOrder = 961
@@ -863,8 +911,8 @@ def Xform "Root" (
         )
         {
             int inputs:ch.connect = </Root/DMXPitchAsModelOffset.inputs:ch>
-            asset inputs:DMX.connect = </Root/DMXPitchAsModelOffset.inputs:DMX>
-            int inputs:start.connect = </Root/DMXPitchAsModelOffset.inputs:start>
+            asset inputs:DMX.connect = </Root/DMXPitchAsModelOffset.inputs:Component_DMX>
+            int inputs:start.connect = </Root/DMXPitchAsModelOffset.inputs:Component_start>
             float2 ui:nodegraph:node:pos = (89.13845, 60.49542)
             int ui:nodegraph:node:stackingOrder = 965
         }
@@ -875,9 +923,19 @@ def Xform "Root" (
             references = </Root/pitch_offset>
         )
         {
-            float inputs:theta.connect = </Root/DMXPitchAsModelOffset/Range.outputs:out>
-            float2 ui:nodegraph:node:pos = (471.5, 280)
-            int ui:nodegraph:node:stackingOrder = 961
+            float inputs:theta.connect = </Root/DMXPitchAsModelOffset/Multiply.outputs:out>
+            float2 ui:nodegraph:node:pos = (606.1816, 276.59305)
+            int ui:nodegraph:node:stackingOrder = 1038
+        }
+
+        def Shader "Multiply"
+        {
+            uniform token info:id = "ND_multiply_float"
+            float inputs:in1.connect = </Root/DMXPitchAsModelOffset/Range.outputs:out>
+            float inputs:in2 = 0.017453292
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (411.53146, 378.83624)
+            int ui:nodegraph:node:stackingOrder = 1037
         }
     }
 
@@ -1021,22 +1079,6 @@ def Xform "Root" (
     def NodeGraph "DMXYawAsModelOffset"
     {
         reorder nameChildren = ["Range", "DMXDecode_1", "yaw_offset_1"]
-        float inputs:angle_high (
-            customData = {
-                dictionary realitykit = {
-                    float2 positionInSubgraph = (9.485388, 328.23773)
-                    int stackingOrderInSubgraph = 964
-                }
-            }
-        )
-        float inputs:angle_low (
-            customData = {
-                dictionary realitykit = {
-                    float2 positionInSubgraph = (5.5393414, 217.61816)
-                    int stackingOrderInSubgraph = 963
-                }
-            }
-        )
         int inputs:ch = 0 (
             customData = {
                 dictionary realitykit = {
@@ -1044,17 +1086,35 @@ def Xform "Root" (
                 }
             }
         )
-        asset inputs:DMX = @@ (
+        asset inputs:Component_DMX = @@ (
             customData = {
                 dictionary realitykit = {
-                    float2 positionInSubgraph = (-100.397064, 75.57934)
+                    float2 positionInSubgraph = (-164.24086, 78.998276)
+                    int stackingOrderInSubgraph = 1036
                 }
             }
         )
-        int inputs:start = 0 (
+        float inputs:Component_panMax (
             customData = {
                 dictionary realitykit = {
-                    float2 positionInSubgraph = (-137.16066, 132.33376)
+                    float2 positionInSubgraph = (-101.826164, 327.03693)
+                    int stackingOrderInSubgraph = 973
+                }
+            }
+        )
+        float inputs:Component_panMin (
+            customData = {
+                dictionary realitykit = {
+                    float2 positionInSubgraph = (-100.738304, 252.4944)
+                    int stackingOrderInSubgraph = 975
+                }
+            }
+        )
+        int inputs:Component_start = 0 (
+            customData = {
+                dictionary realitykit = {
+                    float2 positionInSubgraph = (-151.47305, 165.66252)
+                    int stackingOrderInSubgraph = 1039
                 }
             }
         )
@@ -1070,8 +1130,8 @@ def Xform "Root" (
         float2 ui:nodegraph:node:pos = (354.07208, 352.14545)
         int ui:nodegraph:node:stackingOrder = 1
         string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:pitch_offset_1_Subtract_out"]
-        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (715.78033, 274.61453)
-        int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 968
+        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (781.69104, 276.90308)
+        int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 1006
 
         def Shader "Range"
         {
@@ -1082,11 +1142,11 @@ def Xform "Root" (
             float inputs:inhigh
             float inputs:inlow
             float inputs:outhigh = 90
-            float inputs:outhigh.connect = </Root/DMXYawAsModelOffset.inputs:angle_high>
-            float inputs:outlow.connect = </Root/DMXYawAsModelOffset.inputs:angle_low>
+            float inputs:outhigh.connect = </Root/DMXYawAsModelOffset.inputs:Component_panMax>
+            float inputs:outlow.connect = </Root/DMXYawAsModelOffset.inputs:Component_panMin>
             float outputs:out
-            float2 ui:nodegraph:node:pos = (282.25, 280)
-            int ui:nodegraph:node:stackingOrder = 961
+            float2 ui:nodegraph:node:pos = (267.36148, 281.24)
+            int ui:nodegraph:node:stackingOrder = 977
         }
 
         def "DMXDecode_1" (
@@ -1096,10 +1156,10 @@ def Xform "Root" (
         )
         {
             int inputs:ch.connect = </Root/DMXYawAsModelOffset.inputs:ch>
-            asset inputs:DMX.connect = </Root/DMXYawAsModelOffset.inputs:DMX>
-            int inputs:start.connect = </Root/DMXYawAsModelOffset.inputs:start>
+            asset inputs:DMX.connect = </Root/DMXYawAsModelOffset.inputs:Component_DMX>
+            int inputs:start.connect = </Root/DMXYawAsModelOffset.inputs:Component_start>
             float2 ui:nodegraph:node:pos = (89.13845, 60.49542)
-            int ui:nodegraph:node:stackingOrder = 965
+            int ui:nodegraph:node:stackingOrder = 1035
         }
 
         def "yaw_offset_1" (
@@ -1108,9 +1168,19 @@ def Xform "Root" (
             references = </Root/yaw_offset>
         )
         {
-            float inputs:theta.connect = </Root/DMXYawAsModelOffset/Range.outputs:out>
-            float2 ui:nodegraph:node:pos = (435.44968, 209.91997)
-            int ui:nodegraph:node:stackingOrder = 967
+            float inputs:theta.connect = </Root/DMXYawAsModelOffset/Multiply.outputs:out>
+            float2 ui:nodegraph:node:pos = (526.73004, 212.47826)
+            int ui:nodegraph:node:stackingOrder = 1006
+        }
+
+        def Shader "Multiply"
+        {
+            uniform token info:id = "ND_multiply_float"
+            float inputs:in1.connect = </Root/DMXYawAsModelOffset/Range.outputs:out>
+            float inputs:in2 = 0.017453292
+            float outputs:out
+            float2 ui:nodegraph:node:pos = (411.66156, 370.15686)
+            int ui:nodegraph:node:stackingOrder = 1034
         }
     }
 }

@@ -2,6 +2,7 @@ import Foundation
 
 public struct DMX: RawRepresentable, Sendable {
     public var rawValue: InlineArray<512, UInt8> = .init(repeating: 0)
+    public init() {}
     public init(rawValue: RawValue) {self.rawValue = rawValue}
     public init(value: [UInt8]) {
         assert(value.count == RawValue.count)

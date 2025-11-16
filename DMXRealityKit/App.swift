@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import RealityKit
+import RealityKitContent
 
 @main
 struct DMXRealityKitApp: App {
-    var body: some Scene {
+    var body: some SwiftUI.Scene {
         WindowGroup {
             ContentView()
         }

@@ -3,14 +3,6 @@
     "objectMetadataList" : [
       [
         "9C79E0D1-D390-41E3-A184-67013B7D1164",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "9C79E0D1-D390-41E3-A184-67013B7D1164",
         "Root",
         "Sphere"
       ],
@@ -27,6 +19,14 @@
       {
         "isExpanded" : true,
         "isLocked" : false
+      },
+      [
+        "9C79E0D1-D390-41E3-A184-67013B7D1164",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
       }
     ]
   },
@@ -34,39 +34,12 @@
     "objectMetadataList" : [
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "Cube"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
         "MovieStudioSpotlight",
         "geom",
         "realistic",
         "geo",
-        "lod0",
-        "spotlight_studio_base_realistic_lod0"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "yaw_offset"
+        "lod0"
       ],
       {
         "isExpanded" : true,
@@ -84,20 +57,7 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "MovieStudioSpotlight"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "MovieStudioSpotlight",
-        "geom",
-        "realistic",
-        "materials",
-        "spotlight_studio_realistic_01_mat_sg"
+        "yaw_offset"
       ],
       {
         "isExpanded" : true,
@@ -125,10 +85,51 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
+        "MovieStudioSpotlight"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "DMXDecode"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
         "MovieStudioSpotlight",
         "geom",
         "realistic",
-        "geo"
+        "materials",
+        "spotlight_studio_realistic_01_mat_sg"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovieStudioSpotlight",
+        "geom",
+        "realistic",
+        "geo",
+        "lod0",
+        "spotlight_studio_base_realistic_lod0"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -139,6 +140,35 @@
         "Root",
         "Material",
         "nodegraph"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "Cube"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovieStudioSpotlight",
+        "geom",
+        "realistic"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "pitch_offset"
       ],
       {
         "isExpanded" : true,
@@ -163,8 +193,16 @@
         "MovieStudioSpotlight",
         "geom",
         "realistic",
-        "geo",
-        "lod0"
+        "materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "DMXPitchAsModelOffset"
       ],
       {
         "isExpanded" : true,
@@ -176,45 +214,7 @@
         "MovieStudioSpotlight",
         "geom",
         "realistic",
-        "materials"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "MovieStudioSpotlight",
-        "geom",
-        "realistic"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "DMXDecode"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "pitch_offset"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "DMXPitchAsModelOffset"
+        "geo"
       ],
       {
         "isExpanded" : true,
