@@ -61,11 +61,11 @@ struct DMXTextureUpdateSystem: System {
             entity.forEachModelEntity { e in
                 e.mapShaderGraphMaterials { m in
                     let params: [String: MaterialParameters.Value] = [
-//                        "pivot": .simd3Float(c.pivot),
+                        "pivot": .simd3Float(c.pivot),
                         "panMin": .float(c.panMin),
                         "panMax": .float(c.panMax),
                         "tiltMin": .float(c.tiltMin),
-                        "tileMax": .float(c.tiltMax),
+                        "tiltMax": .float(c.tiltMax),
                     ]
                     params.forEach { k, v in
                         let k = "Component_\(k)"

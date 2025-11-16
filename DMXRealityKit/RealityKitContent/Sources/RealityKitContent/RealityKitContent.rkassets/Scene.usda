@@ -9,7 +9,7 @@ def Xform "Root" (
     active = true
 )
 {
-    reorder nameChildren = ["DMXDecode", "DMXDecodeRGB", "pitch_offset", "yaw_offset", "DMXPitchAsModelOffset", "DMXYawAsModelOffset", "DMXVisualizer", "DMXMaterial", "Cube", "MovieStudioSpotlight"]
+    reorder nameChildren = ["DMXVisualizer", "MovingHeadLight", "DMXMaterial", "Cube", "MovieStudioSpotlight"]
     def Cube "Cube" (
         active = true
         prepend apiSchemas = ["MaterialBindingAPI"]
@@ -94,7 +94,7 @@ def Xform "Root" (
     }
 
     def "MovieStudioSpotlight" (
-        active = true
+        active = false
         references = @MovieStudioSpotlight.usdz@
     )
     {
@@ -677,6 +677,237 @@ def Xform "Root" (
             )
             {
                 int inputs:ch = 4
+            }
+        }
+    }
+
+    def "MovingHeadLight" (
+        active = true
+        prepend references = @MovingHeadLight.usda@
+    )
+    {
+        float3 xformOp:scale = (1, 1, 1)
+
+        over "MovingHeadLight"
+        {
+            over "Lens"
+            {
+                over "Material"
+                {
+                    float3 inputs:Component_pivot (
+                        customData = {
+                            dictionary realitykit = {
+                                float2 positionInSubgraph = (-605.8823, 628.25464)
+                                int stackingOrderInSubgraph = 164
+                            }
+                        }
+                    )
+                }
+            }
+
+            over "Body"
+            {
+            }
+
+            over "Body_1"
+            {
+            }
+
+            over "RealityKitContent_LightMovingHeadComponent"
+            {
+                float pivotZ = -0.2
+            }
+        }
+    }
+
+    def "MovingHeadLight_1" (
+        active = true
+        prepend references = @MovingHeadLight.usda@
+    )
+    {
+        float2 ui:nodegraph:node:pos = (1372.7405, 252.74336)
+        int ui:nodegraph:node:stackingOrder = 1
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (-1, 0, 0)
+
+        over "MovingHeadLight"
+        {
+            over "Lens"
+            {
+                over "Material"
+                {
+                    over "Add"
+                    {
+                        float3 inputs:in2 = (-1, 1, 0)
+                        int ui:nodegraph:node:stackingOrder = 166
+                    }
+                }
+            }
+
+            over "Body"
+            {
+            }
+
+            over "Body_1"
+            {
+            }
+
+            over "BodyMaterial"
+            {
+                over "Add"
+                {
+                    float3 inputs:in2 = (-1, 1, 0)
+                    int ui:nodegraph:node:stackingOrder = 169
+                }
+            }
+
+            over "RealityKitContent_LightMovingHeadComponent"
+            {
+                float pivotZ = -0.2
+            }
+        }
+    }
+
+    def "MovingHeadLight_2" (
+        active = true
+        prepend references = @MovingHeadLight.usda@
+    )
+    {
+        float2 ui:nodegraph:node:pos = (1392.7405, 272.74335)
+        int ui:nodegraph:node:stackingOrder = 2
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (-0.5, 0, 0)
+
+        over "MovingHeadLight"
+        {
+            over "Lens"
+            {
+                over "Material"
+                {
+                    over "Add"
+                    {
+                        float3 inputs:in2 = (-0.5, 1, 0)
+                        int ui:nodegraph:node:stackingOrder = 166
+                    }
+                }
+            }
+
+            over "Body"
+            {
+            }
+
+            over "Body_1"
+            {
+            }
+
+            over "BodyMaterial"
+            {
+                over "Add"
+                {
+                    float3 inputs:in2 = (-0.5, 1, 0)
+                    int ui:nodegraph:node:stackingOrder = 169
+                }
+            }
+
+            over "RealityKitContent_LightMovingHeadComponent"
+            {
+                float pivotZ = -0.2
+            }
+        }
+    }
+
+    def "MovingHeadLight_3" (
+        active = true
+        prepend references = @MovingHeadLight.usda@
+    )
+    {
+        float2 ui:nodegraph:node:pos = (1412.7405, 292.74335)
+        int ui:nodegraph:node:stackingOrder = 3
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0.5, 0, 0)
+
+        over "MovingHeadLight"
+        {
+            over "Lens"
+            {
+                over "Material"
+                {
+                    over "Add"
+                    {
+                        float3 inputs:in2 = (0.5, 1, 0)
+                        int ui:nodegraph:node:stackingOrder = 165
+                    }
+                }
+            }
+
+            over "Body"
+            {
+            }
+
+            over "Body_1"
+            {
+            }
+
+            over "BodyMaterial"
+            {
+                over "Add"
+                {
+                    float3 inputs:in2 = (0.5, 1, 0)
+                    int ui:nodegraph:node:stackingOrder = 168
+                }
+            }
+
+            over "RealityKitContent_LightMovingHeadComponent"
+            {
+                float pivotZ = -0.2
+            }
+        }
+    }
+
+    def "MovingHeadLight_4" (
+        active = true
+        prepend references = @MovingHeadLight.usda@
+    )
+    {
+        float2 ui:nodegraph:node:pos = (1432.7405, 312.74335)
+        int ui:nodegraph:node:stackingOrder = 4
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (1, 0, 0)
+
+        over "MovingHeadLight"
+        {
+            over "Lens"
+            {
+                over "Material"
+                {
+                    over "Add"
+                    {
+                        float3 inputs:in2 = (1, 1, 0)
+                        int ui:nodegraph:node:stackingOrder = 166
+                    }
+                }
+            }
+
+            over "Body"
+            {
+            }
+
+            over "Body_1"
+            {
+            }
+
+            over "BodyMaterial"
+            {
+                over "Add"
+                {
+                    float3 inputs:in2 = (1, 1, 0)
+                    int ui:nodegraph:node:stackingOrder = 169
+                }
+            }
+
+            over "RealityKitContent_LightMovingHeadComponent"
+            {
+                float pivotZ = -0.2
             }
         }
     }

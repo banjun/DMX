@@ -3,6 +3,15 @@
     "objectMetadataList" : [
       [
         "9C79E0D1-D390-41E3-A184-67013B7D1164",
+        "Root",
+        "Sphere"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9C79E0D1-D390-41E3-A184-67013B7D1164",
         "Root"
       ],
       {
@@ -14,15 +23,6 @@
         "Root",
         "Sphere",
         "DMXMaterial"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "9C79E0D1-D390-41E3-A184-67013B7D1164",
-        "Root",
-        "Sphere"
       ],
       {
         "isExpanded" : true,
@@ -47,15 +47,6 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "DMXVisualizer"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
         "MovieStudioSpotlight",
         "geom"
       ],
@@ -66,25 +57,9 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "Cube"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "MovieStudioSpotlight"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
-        "Root",
-        "DMXMaterial"
+        "MovingHeadLight_2",
+        "MovingHeadLight",
+        "BodyMaterial"
       ],
       {
         "isExpanded" : true,
@@ -103,9 +78,187 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
+        "MovingHeadLight_3"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "DMXVisualizer",
+        "Cube_1"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "DMXVisualizer",
+        "DMXBar"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_1"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_1",
+        "MovingHeadLight",
+        "Lens",
+        "Material"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "DMXVisualizer",
+        "Cube_5"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "DMXVisualizer"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_4"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_1",
+        "MovingHeadLight",
+        "Lens"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "Cube"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
         "MovieStudioSpotlight",
         "geom",
-        "realistic"
+        "realistic",
+        "materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "DMXVisualizer",
+        "Cube_2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight",
+        "Lens",
+        "Material"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovieStudioSpotlight"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight",
+        "BodyMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_2",
+        "MovingHeadLight"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "DMXMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_4",
+        "MovingHeadLight",
+        "BodyMaterial"
       ],
       {
         "isExpanded" : true,
@@ -128,7 +281,7 @@
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
         "DMXVisualizer",
-        "Cube_5"
+        "Cube_4"
       ],
       {
         "isExpanded" : true,
@@ -137,8 +290,49 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "DMXVisualizer",
-        "Cube_2"
+        "MovingHeadLight_3",
+        "MovingHeadLight",
+        "Lens"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight",
+        "Body"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_1",
+        "MovingHeadLight"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_1",
+        "MovingHeadLight",
+        "BodyMaterial"
       ],
       {
         "isExpanded" : true,
@@ -157,8 +351,8 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "DMXVisualizer",
-        "Cube_1"
+        "MovingHeadLight_3",
+        "MovingHeadLight"
       ],
       {
         "isExpanded" : true,
@@ -167,8 +361,9 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "DMXVisualizer",
-        "DMXBar"
+        "MovingHeadLight_4",
+        "MovingHeadLight",
+        "Lens"
       ],
       {
         "isExpanded" : true,
@@ -185,10 +380,8 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "MovieStudioSpotlight",
-        "geom",
-        "realistic",
-        "materials"
+        "MovingHeadLight",
+        "Lens"
       ],
       {
         "isExpanded" : true,
@@ -197,8 +390,53 @@
       [
         "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
         "Root",
-        "DMXVisualizer",
-        "Cube_4"
+        "MovingHeadLight_3",
+        "MovingHeadLight",
+        "BodyMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_3",
+        "MovingHeadLight",
+        "Lens",
+        "Material"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_2",
+        "MovingHeadLight",
+        "Lens"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovieStudioSpotlight",
+        "geom",
+        "realistic"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_4",
+        "MovingHeadLight"
       ],
       {
         "isExpanded" : true,
@@ -216,11 +454,92 @@
       {
         "isExpanded" : true,
         "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_4",
+        "MovingHeadLight",
+        "Lens",
+        "Material"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "BF6F30A1-0DD8-4F93-B7E7-023BB5932977",
+        "Root",
+        "MovingHeadLight_2",
+        "MovingHeadLight",
+        "Lens",
+        "Material"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "C634D088-B1C6-455A-909A-622E72AA3DA6" : {
+    "objectMetadataList" : [
+      [
+        "C634D088-B1C6-455A-909A-622E72AA3DA6",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "C634D088-B1C6-455A-909A-622E72AA3DA6",
+        "Root",
+        "MovingHeadLight"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "C634D088-B1C6-455A-909A-622E72AA3DA6",
+        "Root",
+        "MovingHeadLight",
+        "Lens"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "C634D088-B1C6-455A-909A-622E72AA3DA6",
+        "Root",
+        "MovingHeadLight",
+        "BodyMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
       }
     ]
   },
   "EC97C9EE-C60B-4789-B427-70387AB3B55D" : {
     "objectMetadataList" : [
+      [
+        "EC97C9EE-C60B-4789-B427-70387AB3B55D",
+        "DMXPitchAsModelOffset"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "EC97C9EE-C60B-4789-B427-70387AB3B55D",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
       [
         "EC97C9EE-C60B-4789-B427-70387AB3B55D",
         "DMXDecodeRGB",
@@ -232,7 +551,7 @@
       },
       [
         "EC97C9EE-C60B-4789-B427-70387AB3B55D",
-        "DMXPitchAsModelOffset"
+        "DMXPanTiltAsModelOffset"
       ],
       {
         "isExpanded" : true,
@@ -248,7 +567,7 @@
       },
       [
         "EC97C9EE-C60B-4789-B427-70387AB3B55D",
-        "DMXDecodeRGB"
+        "pitch_offset"
       ],
       {
         "isExpanded" : true,
@@ -256,7 +575,15 @@
       },
       [
         "EC97C9EE-C60B-4789-B427-70387AB3B55D",
-        "Root"
+        "yaw_offset"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "EC97C9EE-C60B-4789-B427-70387AB3B55D",
+        "DMXDecodeRGB"
       ],
       {
         "isExpanded" : true,

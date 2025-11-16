@@ -1,0 +1,373 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (494.40.1)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    quatf xformOp:orient = (1, 0, 0, 0)
+    float3 xformOp:scale = (1, 1, 1)
+    float3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+    def Xform "MovingHeadLight" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (1.5707964, 0, 0)
+        }
+    )
+    {
+        reorder nameChildren = ["Lens", "Body", "BodyMaterial", "RealityKitContent_DMXReceiverComponent", "RealityKitContent_LightMovingHeadComponent"]
+        quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
+        float3 xformOp:translate = (0, 1, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Cylinder "Lens" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token axis = "Y"
+            double height = 0.02
+            rel material:binding = </Root/MovingHeadLight/Lens/Material> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            double radius = 0.08
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0, 0.015772404, 0.0000047087674)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def Material "Material"
+            {
+                reorder nameChildren = ["PreviewSurface", "RGB", "GeometryModifier", "PanTilt"]
+                asset inputs:Component_DMX = @@ (
+                    customData = {
+                        dictionary realitykit = {
+                            float2 positionInSubgraph = (-677.6098, -33.778713)
+                            int stackingOrderInSubgraph = 164
+                        }
+                    }
+                )
+                float inputs:Component_panMax = 270 (
+                    customData = {
+                        dictionary realitykit = {
+                            float2 positionInSubgraph = (-606.10675, 276.8053)
+                            int stackingOrderInSubgraph = 164
+                        }
+                    }
+                )
+                float inputs:Component_panMin = -270 (
+                    customData = {
+                        dictionary realitykit = {
+                            float2 positionInSubgraph = (-604.72565, 374.17346)
+                            int stackingOrderInSubgraph = 164
+                        }
+                    }
+                )
+                float3 inputs:Component_pivot = (0, 0, -0.05) (
+                    customData = {
+                        dictionary realitykit = {
+                            float2 positionInSubgraph = (-605.8823, 628.25464)
+                            int stackingOrderInSubgraph = 164
+                        }
+                    }
+                )
+                int inputs:Component_start = 1 (
+                    customData = {
+                        dictionary realitykit = {
+                            float2 positionInSubgraph = (-650.63776, 66.91099)
+                            int stackingOrderInSubgraph = 164
+                        }
+                    }
+                )
+                float inputs:Component_tiltMax = 135 (
+                    customData = {
+                        dictionary realitykit = {
+                            float2 positionInSubgraph = (-601.06683, 453.4476)
+                            int stackingOrderInSubgraph = 164
+                        }
+                    }
+                )
+                float inputs:Component_tiltMin = -135 (
+                    customData = {
+                        dictionary realitykit = {
+                            float2 positionInSubgraph = (-578.10815, 536.57935)
+                            int stackingOrderInSubgraph = 164
+                        }
+                    }
+                )
+                token outputs:mtlx:surface.connect = </Root/MovingHeadLight/Lens/Material/PreviewSurface.outputs:out>
+                token outputs:realitykit:vertex.connect = </Root/MovingHeadLight/Lens/Material/GeometryModifier.outputs:out>
+                float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (339.6875, 178.83984)
+                int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 20
+
+                def Shader "PreviewSurface"
+                {
+                    uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+                    color3f inputs:diffuseColor.connect = </Root/MovingHeadLight/Lens/Material/RGB.outputs:RGB>
+                    float inputs:metallic
+                    float inputs:roughness = 0.3
+                    token outputs:out
+                    float2 ui:nodegraph:node:pos = (93.5, 100.5)
+                    int ui:nodegraph:node:stackingOrder = 5
+                }
+
+                def NodeGraph "RGB" (
+                    active = true
+                    references = @DMXMaterials.usda@</DMXDecodeRGB>
+                )
+                {
+                    asset inputs:DMX.connect = </Root/MovingHeadLight/Lens/Material.inputs:Component_DMX>
+                    int inputs:start = 1
+                    int inputs:start.connect = </Root/MovingHeadLight/Lens/Material.inputs:Component_start>
+                    float2 ui:nodegraph:node:pos = (-134.84102, -46.93006)
+                    int ui:nodegraph:node:stackingOrder = 25
+                    float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (844.34753, 130.53307)
+                    int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 708
+                }
+
+                def Shader "GeometryModifier"
+                {
+                    uniform token info:id = "ND_realitykit_geometrymodifier_2_0_vertexshader"
+                    color4f inputs:color
+                    float3 inputs:modelPositionOffset.connect = </Root/MovingHeadLight/Lens/Material/PanTilt.outputs:PanTiltAsModelOffset>
+                    float3 inputs:normal
+                    token outputs:out
+                    float2 ui:nodegraph:node:pos = (48.398438, 405.1797)
+                    int ui:nodegraph:node:stackingOrder = 21
+                }
+
+                def NodeGraph "PanTilt" (
+                    active = true
+                    references = @DMXMaterials.usda@</DMXPanTiltAsModelOffset>
+                )
+                {
+                    int inputs:chPan = 3
+                    int inputs:chTilt = 4
+                    asset inputs:Component_DMX.connect = </Root/MovingHeadLight/Lens/Material.inputs:Component_DMX>
+                    float inputs:Component_panMax.connect = </Root/MovingHeadLight/Lens/Material.inputs:Component_panMax>
+                    float inputs:Component_panMin.connect = </Root/MovingHeadLight/Lens/Material.inputs:Component_panMin>
+                    int inputs:Component_start.connect = </Root/MovingHeadLight/Lens/Material.inputs:Component_start>
+                    float inputs:Component_tiltMax (
+                        customData = {
+                            dictionary realitykit = {
+                                float2 positionInSubgraph = (97.03872, 581.6908)
+                                int stackingOrderInSubgraph = 1287
+                            }
+                        }
+                    )
+                    float inputs:Component_tiltMax.connect = </Root/MovingHeadLight/Lens/Material.inputs:Component_tiltMax>
+                    float inputs:Component_tiltMin.connect = </Root/MovingHeadLight/Lens/Material.inputs:Component_tiltMin>
+                    float3 inputs:pivot.connect = </Root/MovingHeadLight/Lens/Material/Add.outputs:out>
+                    float2 ui:nodegraph:node:pos = (-225.27193, 299.00012)
+                    int ui:nodegraph:node:stackingOrder = 34
+                    float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (0, 87.5)
+                }
+
+                def Shader "Add"
+                {
+                    uniform token info:id = "ND_add_vector3"
+                    float3 inputs:in1.connect = </Root/MovingHeadLight/Lens/Material.inputs:Component_pivot>
+                    float3 inputs:in2 = (0, 1, 0)
+                    float3 outputs:out
+                    float2 ui:nodegraph:node:pos = (-364.07465, 595.06726)
+                    int ui:nodegraph:node:stackingOrder = 164
+                }
+            }
+        }
+
+        def RealityKitCustomComponent "RealityKitContent_DMXReceiverComponent"
+        {
+            uniform token info:id = "RealityKitContent.DMXReceiverComponent"
+        }
+
+        def RealityKitCustomComponent "RealityKitContent_LightMovingHeadComponent"
+        {
+            uniform token info:id = "RealityKitContent.LightMovingHeadComponent"
+            float pivotZ = -0.2
+        }
+
+        def Material "BodyMaterial"
+        {
+            reorder nameChildren = ["DefaultSurfaceShader", "PanTilt"]
+            asset inputs:Component_DMX = @@ (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-970.7961, -123.56851)
+                        int stackingOrderInSubgraph = 167
+                    }
+                }
+            )
+            float inputs:Component_panMax = 270 (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-899.2929, 187.0155)
+                        int stackingOrderInSubgraph = 167
+                    }
+                }
+            )
+            float inputs:Component_panMin = -270 (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-897.9118, 284.38367)
+                        int stackingOrderInSubgraph = 167
+                    }
+                }
+            )
+            float3 inputs:Component_pivot = (0, 0, -0.05) (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-899.06854, 538.46484)
+                        int stackingOrderInSubgraph = 168
+                    }
+                }
+            )
+            int inputs:Component_start = 1 (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-943.8239, -22.878817)
+                        int stackingOrderInSubgraph = 167
+                    }
+                }
+            )
+            float inputs:Component_tiltMax = 135 (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-894.2531, 363.65784)
+                        int stackingOrderInSubgraph = 167
+                    }
+                }
+            )
+            float inputs:Component_tiltMin = -135 (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-871.2944, 446.78955)
+                        int stackingOrderInSubgraph = 167
+                    }
+                }
+            )
+            token outputs:mtlx:surface.connect = </Root/MovingHeadLight/BodyMaterial/PreviewSurface.outputs:out>
+            token outputs:realitykit:vertex.connect = </Root/MovingHeadLight/BodyMaterial/GeometryModifier.outputs:out>
+            token outputs:surface.connect = </Root/MovingHeadLight/BodyMaterial/DefaultSurfaceShader.outputs:surface>
+            float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (0, 110.5)
+
+            def Shader "DefaultSurfaceShader" (
+                active = false
+            )
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0, 0, 0) (
+                    colorSpace = "srgb_texture"
+                )
+                float inputs:roughness = 0.5
+                token outputs:surface
+            }
+
+            def NodeGraph "PanTilt" (
+                active = true
+                references = @DMXMaterials.usda@</DMXPanTiltAsModelOffset>
+            )
+            {
+                int inputs:chPan = 3
+                int inputs:chTilt = 4
+                asset inputs:Component_DMX.connect = </Root/MovingHeadLight/BodyMaterial.inputs:Component_DMX>
+                float inputs:Component_panMax.connect = </Root/MovingHeadLight/BodyMaterial.inputs:Component_panMax>
+                float inputs:Component_panMin.connect = </Root/MovingHeadLight/BodyMaterial.inputs:Component_panMin>
+                int inputs:Component_start.connect = </Root/MovingHeadLight/BodyMaterial.inputs:Component_start>
+                float inputs:Component_tiltMax (
+                    customData = {
+                        dictionary realitykit = {
+                            float2 positionInSubgraph = (97.03872, 581.6908)
+                            int stackingOrderInSubgraph = 1287
+                        }
+                    }
+                )
+                float inputs:Component_tiltMax.connect = </Root/MovingHeadLight/BodyMaterial.inputs:Component_tiltMax>
+                float inputs:Component_tiltMin.connect = </Root/MovingHeadLight/BodyMaterial.inputs:Component_tiltMin>
+                float3 inputs:pivot.connect = </Root/MovingHeadLight/BodyMaterial/Add.outputs:out>
+                float3 outputs:PanTiltAsModelOffset.connect = </Root/MovingHeadLight/BodyMaterial/PanTilt/Subtract.outputs:out>
+                float2 ui:nodegraph:node:pos = (-479.67035, 337.06653)
+                int ui:nodegraph:node:stackingOrder = 71
+                float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (0, 87.5)
+            }
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+                color3f inputs:diffuseColor = (0, 0, 0) (
+                    colorSpace = "srgb_texture"
+                )
+                float inputs:roughness = 0.5
+                token outputs:out
+                float2 ui:nodegraph:node:pos = (-255, 105)
+                int ui:nodegraph:node:stackingOrder = 64
+            }
+
+            def Shader "GeometryModifier"
+            {
+                uniform token info:id = "ND_realitykit_geometrymodifier_2_0_vertexshader"
+                float3 inputs:bitangent
+                color4f inputs:color
+                float3 inputs:modelPositionOffset.connect = </Root/MovingHeadLight/BodyMaterial/PanTilt.outputs:PanTiltAsModelOffset>
+                float3 inputs:normal
+                float2 inputs:uv0
+                float2 inputs:uv1
+                float4 inputs:uv2
+                token outputs:out
+                float2 ui:nodegraph:node:pos = (-200.94531, 389.8672)
+                int ui:nodegraph:node:stackingOrder = 69
+            }
+
+            def Shader "Add"
+            {
+                uniform token info:id = "ND_add_vector3"
+                float3 inputs:in1.connect = </Root/MovingHeadLight/BodyMaterial.inputs:Component_pivot>
+                float3 inputs:in2 = (0, 1, 0)
+                float3 outputs:out
+                float2 ui:nodegraph:node:pos = (-657.2609, 505.27747)
+                int ui:nodegraph:node:stackingOrder = 167
+            }
+        }
+
+        def Cylinder "Body" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token axis = "Y"
+            double height = 0.2
+            rel material:binding = </Root/MovingHeadLight/BodyMaterial> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            double radius = 0.11
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (2.444722e-9, -0.08441118, 0.0000050067906)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Cylinder "Body_1" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token axis = "Y"
+            double height = 0.1
+            rel material:binding = </Root/MovingHeadLight/BodyMaterial> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            double radius = 0.08
+            float2 ui:nodegraph:node:pos = (128.97157, 260.7302)
+            int ui:nodegraph:node:stackingOrder = 1
+            quatf xformOp:orient = (0.99999994, 2.980232e-8, 0, 0)
+            float3 xformOp:scale = (0.9999998, 0.9999998, 0.9999998)
+            float3 xformOp:translate = (-9.313227e-10, -0.15763251, -0.0001512766)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+    }
+}
+
