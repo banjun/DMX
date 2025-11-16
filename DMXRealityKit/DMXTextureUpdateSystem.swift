@@ -16,6 +16,7 @@ struct DMXTextureUpdateSystem: System {
 
     // currently supporting only 1 universe. make height > 1 to support more universe (along with updating shadergraph)
     private let llTexture: LowLevelTexture = try! .init(descriptor: .init(pixelFormat: .rgba8Unorm, width: DMX.RawValue.count / 4, height: 1, textureUsage: [.shaderRead]))
+    private let metalTexture: MTLTexture
     private let textureResource: TextureResource
     private let textureBuffer: MTLBuffer
     private let commandQueue: MTLCommandQueue
@@ -23,6 +24,7 @@ struct DMXTextureUpdateSystem: System {
     private var cancellables: Set<AnyCancellable> = []
 
     init(scene: RealityKit.Scene) {
+        metalTexture = llTexture.read()
         let textureResource = try! TextureResource(from: llTexture)
         self.textureResource = textureResource
         let device = MTLCreateSystemDefaultDevice()!
@@ -89,7 +91,8 @@ struct DMXTextureUpdateSystem: System {
                 textureBuffer.contents().copyMemory(from: $0.baseAddress!, byteCount: DMX.RawValue.count)
             }
             // copy MTLBuffer into LowLevelTexture
-            blit.copy(from: textureBuffer, sourceOffset: 0, sourceBytesPerRow: DMX.RawValue.count, sourceBytesPerImage: DMX.RawValue.count, sourceSize: .init(width: DMX.RawValue.count / 4, height: 1, depth: 1), to: llTexture.replace(using: commandBuffer), destinationSlice: 0, destinationLevel: 0, destinationOrigin: .init())
+            let metalTexture = metalTexture // or using llTexture.replace(using: commandBuffer) is more reliable in theory but heavier
+            blit.copy(from: textureBuffer, sourceOffset: 0, sourceBytesPerRow: DMX.RawValue.count, sourceBytesPerImage: DMX.RawValue.count, sourceSize: .init(width: DMX.RawValue.count / 4, height: 1, depth: 1), to: metalTexture, destinationSlice: 0, destinationLevel: 0, destinationOrigin: .init())
             blit.endEncoding()
             commandBuffer.commit()
 
